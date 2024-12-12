@@ -20,7 +20,7 @@
                      VerticalAlignment="Top"/>
         <StackPanel Name="StackPanel_Main" Grid.Column="0" Grid.Row="1"
                     Orientation="Horizontal"
-                    VerticalAlignment="Top" HorizontalAlignment="Center" Margin="12, 0, 12, 10" Height="24"
+                    VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0, 0, 0, 0" Height="24"
                     Visibility="Visible">
             <TextBlock Name="TextBlock_Main" Visibility="Visible"
                        Text="{Binding ElementName=ProgressBar_Main, Path=Value, StringFormat={}{0:0}%}" 

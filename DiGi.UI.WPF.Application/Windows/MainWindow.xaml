@@ -1,13 +1,18 @@
-﻿<Window x:Class="DiGi.UI.WPF.Application.Windows.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiGi.UI.WPF.Application"
+        xmlns:Controls="clr-namespace:DiGi.UI.WPF.Core.Controls;assembly=DiGi.UI.WPF.Core" x:Class="DiGi.UI.WPF.Application.Windows.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="132,139,0,0" VerticalAlignment="Top" Click="Button_Start_Click"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="21"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="132,139,0,0" VerticalAlignment="Top" Click="Button_Start_Click"/>
+        <Controls:ProgressBarControl Name="ProgressBarControl_Main" Grid.Row="1" HorizontalAlignment="Left" Margin="3,3,0,3"  Width="171"/>
     </Grid>
 </Window>

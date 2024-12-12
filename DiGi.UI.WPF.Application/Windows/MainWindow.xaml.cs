@@ -1,4 +1,5 @@
-﻿using DiGi.UI.WPF.Core;
+﻿using DiGi.Core.Interfaces;
+using DiGi.UI.WPF.Core;
 using DiGi.UI.WPF.Core.Classes;
 using System.ComponentModel;
 using System.Windows;
@@ -19,7 +20,31 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
-            Query.ShowProgress(() => 
+            //Query.ShowProgress((IDeterminateWorker determinateWorker) => 
+            //{
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        Button_Start.IsEnabled = false;
+
+            //    });
+
+            //    for (int i = 1; i <= maximum; i++)
+            //    {
+            //        // Simulates work being done
+            //        Thread.Sleep(100);
+
+            //        // Reports progress
+            //        determinateWorker.Report(i, i.ToString());
+            //        //((IndeterminateWindowWorker)sender).Report(i.ToString());
+            //    }
+
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        Button_Start.IsEnabled = true;
+            //    });
+            //}, this, "Calculating...");
+
+            Query.ShowProgress((IIndeterminateWorker worker) =>
             {
                 Dispatcher.Invoke(() =>
                 {
@@ -27,13 +52,14 @@ namespace DiGi.UI.WPF.Application.Windows
 
                 });
 
+                //determinateWorker.Maximum = maximum;
                 for (int i = 1; i <= maximum; i++)
                 {
                     // Simulates work being done
                     Thread.Sleep(100);
 
                     // Reports progress
-                    //((ProgressVisualWorker)sender).Report(i, i.ToString());
+                    worker.Report(i.ToString());
                     //((IndeterminateWindowWorker)sender).Report(i.ToString());
                 }
 
@@ -41,7 +67,8 @@ namespace DiGi.UI.WPF.Application.Windows
                 {
                     Button_Start.IsEnabled = true;
                 });
-            });
+            }, ProgressBarControl_Main, "Calculating...");
+
 
             //IndeterminateWindowWorker indeterminateProgressVisualWorker = new IndeterminateWindowWorker(this);
             //indeterminateProgressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
@@ -55,28 +82,28 @@ namespace DiGi.UI.WPF.Application.Windows
             //progressVisualWorker.Run();
         }
 
-        private void ProgressVisualWorker_DoWork(object? sender, DoWorkEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                Button_Start.IsEnabled = false;
+        //private void ProgressVisualWorker_DoWork(object? sender, DoWorkEventArgs e)
+        //{
+        //    Dispatcher.Invoke(() =>
+        //    {
+        //        Button_Start.IsEnabled = false;
 
-            });
+        //    });
 
-            for (int i = 1; i <= maximum; i++)
-            {
-                // Simulates work being done
-                Thread.Sleep(100);
+        //    for (int i = 1; i <= maximum; i++)
+        //    {
+        //        // Simulates work being done
+        //        Thread.Sleep(100);
 
-                // Reports progress
-                //((ProgressVisualWorker)sender).Report(i, i.ToString());
-                ((IndeterminateWindowWorker)sender).Report(i.ToString());
-            }
+        //        // Reports progress
+        //        //((ProgressVisualWorker)sender).Report(i, i.ToString());
+        //        ((IndeterminateWindowWorker)sender).Report(i.ToString());
+        //    }
 
-            Dispatcher.Invoke(() =>
-            {
-                Button_Start.IsEnabled = true;
-            });
-        }
+        //    Dispatcher.Invoke(() =>
+        //    {
+        //        Button_Start.IsEnabled = true;
+        //    });
+        //}
     }
 }

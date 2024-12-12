@@ -1,5 +1,5 @@
-﻿using DiGi.UI.WPF.Core.Windows;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
@@ -9,7 +9,7 @@ namespace DiGi.UI.WPF.Core.Classes
         protected TWindow window;
 
         public WindowWorker()
-            :base()
+            : base()
         {
             backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
         }

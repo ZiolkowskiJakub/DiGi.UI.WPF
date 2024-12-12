@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="DiGi.UI.WPF.Core.Controls.ProgressBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DiGi.UI.WPF.Core.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="1.2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ProgressBar Name="ProgressBar_Main" Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Value="0" Minimum="0" Maximum="100"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" />
+        <Label Name="Label_Main" Grid.Column="2" Content="" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Center" Padding="0,0,0,0"/>
+        <StackPanel Name="StackPanel_Main" Grid.Column="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0, 0, 0, 0"
+                    Visibility="Hidden">
+            <TextBlock Name="TextBlock_Main" Visibility="Visible"
+                       Text="{Binding ElementName=ProgressBar_Main, Path=Value, StringFormat={}{0:0}%}" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</UserControl>

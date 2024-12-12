@@ -25,5 +25,18 @@ namespace DiGi.UI.WPF.Core.Classes
                 };
             });
         }
+
+        public string Text
+        {
+            get
+            {
+                return window.Label_Main.Content.ToString();
+            }
+
+            set
+            {
+                window.Label_Main.Content = value;
+            }
+        }
     }
 }

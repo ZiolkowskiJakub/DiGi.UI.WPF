@@ -1,9 +1,9 @@
-﻿using DiGi.UI.WPF.Core.Windows;
+﻿using DiGi.Core.Interfaces;
 using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
-{    public class DeterminateWindowWorker : WindowWorker<ProgressBarWindow>
+{    public class DeterminateWindowWorker : ProgressBarWindowWorker, IDeterminateWorker
     {
         public DeterminateWindowWorker()
             : this(null)
@@ -15,14 +15,10 @@ namespace DiGi.UI.WPF.Core.Classes
             :base()
         {
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
-            backgroundWorker.WorkerReportsProgress = true;
 
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
-                window = new ProgressBarWindow()
-                {
-                    Owner = owner
-                };
+                window.IsIndeterminate = false;
             });
         }
 

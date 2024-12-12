@@ -1,10 +1,10 @@
-﻿using DiGi.UI.WPF.Core.Windows;
+﻿using DiGi.Core.Interfaces;
 using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
 {
-    public class IndeterminateWindowWorker : WindowWorker<ProgressBarWindow>
+    public class IndeterminateWindowWorker : ProgressBarWindowWorker, IIndeterminateWorker
     {
         public IndeterminateWindowWorker()
             : this(null)
@@ -13,29 +13,19 @@ namespace DiGi.UI.WPF.Core.Classes
         }
 
         public IndeterminateWindowWorker(System.Windows.Window owner)
-            : base()
+            : base(owner)
         {
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
-            backgroundWorker.WorkerReportsProgress = true;
 
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
-                window = new ProgressBarWindow()
-                {
-                    IsIndeterminate = true,
-                    Owner = owner
-                };
+                window.IsIndeterminate = true;
             });
         }
 
         public void Report(string text)
         {
             backgroundWorker.ReportProgress(0, text);
-        }
-
-        public override void Run()
-        {
-            base.Run();
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)

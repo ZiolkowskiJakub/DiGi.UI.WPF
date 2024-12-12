@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using DiGi.UI.WPF.Core.Interfaces;
+using System.Windows;
 
 namespace DiGi.UI.WPF.Core.Windows
 {
     /// <summary>
     /// Interaction logic for ProgressBarWindow.xaml
     /// </summary>
-    public partial class ProgressBarWindow : Window
+    public partial class ProgressBarWindow : Window, IWindow
     {
         public ProgressBarWindow()
         {
@@ -14,15 +15,8 @@ namespace DiGi.UI.WPF.Core.Windows
 
         public void Update(double value, string text = null)
         {
-            // When progress is reported, update the progress bar control.
             ProgressBar_Main.Value = value;
             Label_Main.Content = text;
-
-            // When progress reaches 100%, close the progress bar window.
-            //if (value == Maximum)
-            //{
-            //    Close();
-            //}
         }
 
         public double Maximum

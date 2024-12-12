@@ -1,10 +1,9 @@
-﻿using DiGi.UI.WPF.Core.Windows;
+﻿using DiGi.UI.WPF.Core.Interfaces;
 using System.ComponentModel;
-using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
 {    
-    public abstract class VisualWorker
+    public abstract class VisualWorker : IVisualWorker
     {
         protected BackgroundWorker backgroundWorker;
 
