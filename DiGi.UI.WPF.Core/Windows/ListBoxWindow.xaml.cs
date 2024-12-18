@@ -1,4 +1,5 @@
-﻿using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Core.Delegates;
+using DiGi.UI.WPF.Core.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,10 +21,15 @@ namespace DiGi.UI.WPF.Core.Windows
             InitializeComponent();
 
             ListBoxControl_Main.SelectionChanged += ListBoxControl_Main_SelectionChanged;
+            ListBoxControl_Main.ItemAdding += ListBoxControl_Main_ItemAdding;
         }
 
-        public event SelectionChangedEventHandler SelectionChanged;
         
+        public event ListBoxItemAddingEventHandler ItemAdding;
+
+        
+        public event SelectionChangedEventHandler SelectionChanged;
+
         public SelectionMode SelectionMode
         {
             get
@@ -37,14 +43,14 @@ namespace DiGi.UI.WPF.Core.Windows
             }
         }
 
-        public List<T> GetValues<T>(bool selected = true)
+        public List<T> GetItems<T>(bool selected = true)
         {
-            return ListBoxControl_Main.GetValues<T>(selected);
+            return ListBoxControl_Main.GetItems<T>(selected);
         }
 
-        public void SetValues<T>(IEnumerable<T> values, Func<T, string> func = null)
+        public void SetItems<T>(IEnumerable<T> values)
         {
-            ListBoxControl_Main.SetValues<T>(values, func);
+            ListBoxControl_Main.SetItems<T>(values);
         }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
@@ -57,6 +63,11 @@ namespace DiGi.UI.WPF.Core.Windows
             DialogResult = true;
         }
 
+        private void ListBoxControl_Main_ItemAdding(object sender, Classes.ListBoxItemAddingEventArgs e)
+        {
+            ItemAdding?.Invoke(this, e);
+        }
+        
         private void ListBoxControl_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectionChanged?.Invoke(this, e);

@@ -1,7 +1,7 @@
 ﻿using DiGi.Core.Interfaces;
 using DiGi.UI.WPF.Core;
 using DiGi.UI.WPF.Core.Classes;
-using System.ComponentModel;
+using DiGi.UI.WPF.Core.Windows;
 using System.Windows;
 
 namespace DiGi.UI.WPF.Application.Windows
@@ -80,6 +80,57 @@ namespace DiGi.UI.WPF.Application.Windows
             //progressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
             //progressVisualWorker.Maximum = maximum;
             //progressVisualWorker.Run();
+        }
+
+        private void Button_ShowWindow_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> values = new List<string>()
+            {
+                "ONE TWO THREE",
+                "TWO TWO ONE",
+                "TWO TWO TWO"
+            };
+
+            bool? result;
+            List<string>? selectedValues = null;
+
+            //ListBoxWindow listBoxWindow = new ListBoxWindow();
+            //listBoxWindow.ItemAdding += (sender, e) =>
+            //{
+            //    string? @string = e.Item as string;
+
+            //    e.Name = @string;
+            //};
+
+            //listBoxWindow.SetItems(values);
+
+            //result = listBoxWindow.ShowDialog();
+
+
+            //if (result != null && result.Value)
+            //{
+            //    selectedValues = listBoxWindow.GetItems<string>(true);
+            //    selectedValues = listBoxWindow.GetItems<string>(false);
+            //}
+
+            CheckBoxTreeViewWindow treeViewWindow = new CheckBoxTreeViewWindow("Test Window");
+            treeViewWindow.ItemAdding += (sender, e) =>
+            {
+                string? @string = e.Item as string;
+
+                e.Path = new ItemPath(@string?.Split(" "));
+                e.Name = @string;
+            };
+
+            treeViewWindow.SetItems(values);
+
+            result = treeViewWindow.ShowDialog();
+
+            selectedValues = null;
+            if (result != null && result.Value)
+            {
+                selectedValues = treeViewWindow.GetItems<string>(true);
+            }
         }
 
         //private void ProgressVisualWorker_DoWork(object? sender, DoWorkEventArgs e)

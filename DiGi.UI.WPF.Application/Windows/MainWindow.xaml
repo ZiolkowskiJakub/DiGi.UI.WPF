@@ -14,5 +14,6 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" x:Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="132,139,0,0" VerticalAlignment="Top" Click="Button_Start_Click"/>
         <Controls:ProgressBarControl Name="ProgressBarControl_Main" Grid.Row="1" HorizontalAlignment="Left" Margin="3,3,0,3"  Width="171"/>
+        <Button x:Name="Button_ShowWindow"  Content="Show Window" HorizontalAlignment="Left" Margin="132,176,0,0" VerticalAlignment="Top" Click="Button_ShowWindow_Click"/>
     </Grid>
 </Window>

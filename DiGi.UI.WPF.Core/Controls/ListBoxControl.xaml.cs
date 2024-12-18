@@ -1,4 +1,6 @@
-﻿using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Core.Classes;
+using DiGi.UI.WPF.Core.Delegates;
+using DiGi.UI.WPF.Core.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,6 +18,8 @@ namespace DiGi.UI.WPF.Core.Controls
         }
 
         public event SelectionChangedEventHandler SelectionChanged;
+
+        public event ListBoxItemAddingEventHandler ItemAdding;
        
         public SelectionMode SelectionMode
         {
@@ -31,24 +35,12 @@ namespace DiGi.UI.WPF.Core.Controls
             }
         }
 
-        public List<T> GetValues<T>(bool selected = true)
+        public List<T> GetItems<T>(bool selected = true)
         {
-            System.Collections.IList list = selected ? ListBox_Main.SelectedItems : ListBox_Main.Items;
-
-            List<T> result = new List<T>();
-            foreach (ListBoxItem listBoxItem in list)
-            {
-                object @object = listBoxItem?.Tag;
-                if (@object is T)
-                {
-                    result.Add((T)@object);
-                }
-            }
-
-            return result;
+            return Query.TagItems<T, ListBoxItem>(ListBox_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
 
-        public void SetValues<T>(IEnumerable<T> values, Func<T, string> func = null)
+        public void SetItems<T>(IEnumerable<T> values)
         {
             ListBox_Main.Items.Clear();
 
@@ -59,7 +51,15 @@ namespace DiGi.UI.WPF.Core.Controls
 
             foreach (T value in values)
             {
-                string text = func == null ? null : func.Invoke(value);
+                ListBoxItemAddingEventArgs itemAddingEventArgs = new ListBoxItemAddingEventArgs(value);
+                ItemAdding?.Invoke(this, itemAddingEventArgs);
+
+                string text = value?.ToString();
+                if(itemAddingEventArgs.Handled)
+                {
+                    text = itemAddingEventArgs.Name;
+                }
+
                 ListBox_Main.Items.Add(new ListBoxItem() { Content = text, Tag = value });
             }
         }
