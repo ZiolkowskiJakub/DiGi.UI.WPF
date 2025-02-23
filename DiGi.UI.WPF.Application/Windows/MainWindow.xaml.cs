@@ -20,29 +20,29 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
-            //Query.ShowProgress((IDeterminateWorker determinateWorker) => 
-            //{
-            //    Dispatcher.Invoke(() =>
-            //    {
-            //        Button_Start.IsEnabled = false;
+            Query.ShowProgress((IDeterminateWorker determinateWorker) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Button_Start.IsEnabled = false;
 
-            //    });
+                });
 
-            //    for (int i = 1; i <= maximum; i++)
-            //    {
-            //        // Simulates work being done
-            //        Thread.Sleep(100);
+                for (int i = 1; i <= maximum; i++)
+                {
+                    // Simulates work being done
+                    Thread.Sleep(100);
 
-            //        // Reports progress
-            //        determinateWorker.Report(i, i.ToString());
-            //        //((IndeterminateWindowWorker)sender).Report(i.ToString());
-            //    }
+                    // Reports progress
+                    determinateWorker.Report(i, i.ToString());
+                    //((IndeterminateWindowWorker)sender).Report(i.ToString());
+                }
 
-            //    Dispatcher.Invoke(() =>
-            //    {
-            //        Button_Start.IsEnabled = true;
-            //    });
-            //}, this, "Calculating...");
+                Dispatcher.Invoke(() =>
+                {
+                    Button_Start.IsEnabled = true;
+                });
+            }, this, "Calculating...");
 
             Query.ShowProgress((IIndeterminateWorker worker) =>
             {
