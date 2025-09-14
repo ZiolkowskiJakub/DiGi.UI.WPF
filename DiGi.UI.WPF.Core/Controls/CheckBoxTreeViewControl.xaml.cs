@@ -11,11 +11,12 @@ namespace DiGi.UI.WPF.Core.Controls
     public partial class CheckBoxTreeViewControl : UserControl
     {
         public CheckBoxTreeViewControl()
+            : base()
         {
             InitializeComponent();
         }
 
-        public event CheckBoxTreeViewItemAddingEventHandler ItemAdding;
+        public event CheckBoxTreeViewItemAddingEventHandler? ItemAdding;
         
         public void CollapseAll()
         {
@@ -29,10 +30,9 @@ namespace DiGi.UI.WPF.Core.Controls
 
         public List<T>? GetItems<T>(bool selected = true)
         {
-            Func<TreeViewItem, bool> selectedFunc = new Func<TreeViewItem, bool>((treeViewItem) =>
+            Func<TreeViewItem, bool> selectedFunc = new((treeViewItem) =>
             {
-                CheckBox? checkBox = treeViewItem?.Header as CheckBox;
-                if (checkBox == null)
+                if (treeViewItem?.Header is not CheckBox checkBox)
                 {
                     return false;
                 }
@@ -53,7 +53,7 @@ namespace DiGi.UI.WPF.Core.Controls
                 return;
             }
 
-            Func<TreeViewItem, ItemPath, bool> matchFunc = new Func<TreeViewItem, ItemPath, bool>((treeViewItem, itemPath) =>
+            Func<TreeViewItem?, ItemPath?, bool> matchFunc = new((treeViewItem, itemPath) =>
             {
                 if (treeViewItem == null || itemPath == null)
                 {
@@ -61,9 +61,8 @@ namespace DiGi.UI.WPF.Core.Controls
                 }
 
                 string? name = null;
-                if (treeViewItem.Header is CheckBox)
+                if (treeViewItem.Header is CheckBox checkBox)
                 {
-                    CheckBox checkBox = (CheckBox)treeViewItem.Header;
                     name = checkBox.Name;
                 }
                 else
@@ -74,14 +73,14 @@ namespace DiGi.UI.WPF.Core.Controls
                 return name == itemPath.Name;
             });
 
-            Func<ItemPath, TreeViewItem?> createFunc = new Func<ItemPath, TreeViewItem?>((itemPath) =>
+            Func<ItemPath?, TreeViewItem?> createFunc = new((itemPath) =>
             {
                 if (itemPath == null)
                 {
                     return null;
                 }
 
-                CheckBox checkBox = new CheckBox() { Content = itemPath.Name };
+                CheckBox checkBox = new () { Content = itemPath.Name };
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
@@ -90,10 +89,10 @@ namespace DiGi.UI.WPF.Core.Controls
 
             foreach (T value in values)
             {
-                CheckBoxTreeViewItemAddingEventArgs itemAddingEventArgs = new CheckBoxTreeViewItemAddingEventArgs(value);
+                CheckBoxTreeViewItemAddingEventArgs itemAddingEventArgs = new(value);
                 ItemAdding?.Invoke(this, itemAddingEventArgs);
 
-                ItemPath path = new ItemPath("Items");
+                ItemPath? path = new("Items");
                 string? name = value?.ToString();
                 bool? isChecked = null;
                 if (itemAddingEventArgs.Handled)
@@ -109,7 +108,7 @@ namespace DiGi.UI.WPF.Core.Controls
                     continue;
                 }
 
-                CheckBox checkBox = new CheckBox() { Content = name };
+                CheckBox checkBox = new () { Content = name };
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
@@ -119,8 +118,7 @@ namespace DiGi.UI.WPF.Core.Controls
 
         private void CheckBox_Updated(object sender, RoutedEventArgs e)
         {
-            CheckBox? checkBox = sender as CheckBox;
-            if(checkBox == null)
+            if (sender is not CheckBox checkBox)
             {
                 return;
             }
@@ -130,7 +128,7 @@ namespace DiGi.UI.WPF.Core.Controls
 
         private void Update(CheckBox checkBox, bool? isChecked)
         {
-
+            throw new NotImplementedException();
         }
 
         private void Button_SelectAll_Click(object sender, RoutedEventArgs e)

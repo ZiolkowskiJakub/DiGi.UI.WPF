@@ -8,46 +8,50 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Create
     {
-        public static BitmapImage BitmapImage(this byte[] bytes)
+        public static BitmapImage? BitmapImage(this byte[]? bytes)
         {
             if (bytes == null)
             {
                 return null;
             }
 
-            using (MemoryStream memoryStream = new MemoryStream(bytes))
-            {
-                BitmapImage result = new BitmapImage();
-                result.BeginInit();
-                result.CacheOption = BitmapCacheOption.OnLoad;
-                result.StreamSource = memoryStream;
-                result.EndInit();
-                result.Freeze();
-                return result;
-            }
+            using MemoryStream memoryStream = new(bytes);
+
+            BitmapImage result = new();
+            result.BeginInit();
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.StreamSource = memoryStream;
+            result.EndInit();
+            result.Freeze();
+            return result;
         }
 
-        public static BitmapImage BitmapImage(System.Drawing.Image image)
+        public static BitmapImage? BitmapImage(Image? image)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
+            if(image is null)
             {
-                image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
-                memoryStream.Position = 0;
-
-                BitmapImage result = new BitmapImage();
-                result.BeginInit();
-                result.CacheOption = BitmapCacheOption.OnLoad;
-                result.StreamSource = memoryStream;
-                result.EndInit();
-                result.Freeze();
-
-                return result;
+                return null;
             }
+
+            using MemoryStream memoryStream = new();
+            
+            image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+            
+            memoryStream.Position = 0;
+
+            BitmapImage result = new ();
+            result.BeginInit();
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.StreamSource = memoryStream;
+            result.EndInit();
+            result.Freeze();
+
+            return result;
         }
 
         public static BitmapImage BitmapImage(int width, int height, System.Drawing.Color color)
         {
-            WriteableBitmap bitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgra32, null);
+            WriteableBitmap bitmap = new (width, height, 96, 96, PixelFormats.Bgra32, null);
 
             // Create pixel data (BGRA format, 4 bytes per pixel)
             int stride = width * 4; // 4 bytes per pixel
@@ -65,21 +69,19 @@ namespace DiGi.UI.WPF.Core
             // Write pixels to the bitmap
             bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, stride, 0);
 
-            using (var stream = new MemoryStream())
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bitmap));
-                encoder.Save(stream);
+            using var stream = new MemoryStream();
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+            encoder.Save(stream);
 
-                BitmapImage result = new BitmapImage();
-                result.BeginInit();
-                result.CacheOption = BitmapCacheOption.OnLoad;
-                result.StreamSource = new MemoryStream(stream.ToArray());
-                result.EndInit();
-                result.Freeze();
+            BitmapImage result = new ();
+            result.BeginInit();
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.StreamSource = new MemoryStream(stream.ToArray());
+            result.EndInit();
+            result.Freeze();
 
-                return result;
-            }
+            return result;
 
         }
     }

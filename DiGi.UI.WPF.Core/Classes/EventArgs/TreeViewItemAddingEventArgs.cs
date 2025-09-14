@@ -6,7 +6,7 @@ namespace DiGi.UI.WPF.Core.Classes
     {
         private ItemPath? path;
 
-        public TreeViewItemAddingEventArgs(object item)
+        public TreeViewItemAddingEventArgs(object? item)
             : base(item)
         {
 

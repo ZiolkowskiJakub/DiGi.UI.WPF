@@ -6,30 +6,26 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Modify
     {
-        public static bool Write(BitmapImage bitmapImage, string path)
+        public static bool Write(BitmapImage? bitmapImage, string? path)
         {
-            if(bitmapImage == null)
+            if(bitmapImage == null || string.IsNullOrWhiteSpace(path))
             {
                 return false;
             }
 
-            BitmapEncoder bitmapEncoder = Query.BitmapEncoder(Query.FileFilter(path));
-            if(bitmapEncoder == null)
-            {
-                bitmapEncoder = new PngBitmapEncoder();
-            }
+            BitmapEncoder? bitmapEncoder = Query.BitmapEncoder(Query.FileFilter(path));
+            bitmapEncoder ??= new PngBitmapEncoder();
 
             bitmapEncoder.Frames.Add(BitmapFrame.Create(bitmapImage));
 
-            using (FileStream fileStream = new FileStream(path, FileMode.Create))
-            {
-                bitmapEncoder.Save(fileStream);
-            }
+            using FileStream fileStream = new(path, FileMode.Create);
+
+            bitmapEncoder.Save(fileStream);
 
             return true;
         }
 
-        public static bool Write(BitmapImage bitmapImage, out string path)
+        public static bool Write(BitmapImage? bitmapImage, out string? path)
         {
             path = null;
 
@@ -38,8 +34,10 @@ namespace DiGi.UI.WPF.Core
                 return false;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = DiGi.Core.IO.Query.Filter(Constants.FileFilter.Jpeg, Constants.FileFilter.Png, DiGi.Core.IO.Create.FileFilter_AllFiles());
+            SaveFileDialog saveFileDialog = new()
+            {
+                Filter = DiGi.Core.IO.Query.Filter(Constants.FileFilter.Jpeg, Constants.FileFilter.Png, DiGi.Core.IO.Create.FileFilter_AllFiles())
+            };
             bool? show = saveFileDialog.ShowDialog();
             if (show == null || !show.HasValue || !show.Value)
             {
@@ -51,9 +49,9 @@ namespace DiGi.UI.WPF.Core
             return Write(bitmapImage, path);
         }
 
-        public static bool Write(BitmapImage bitmapImage)
+        public static bool Write(BitmapImage? bitmapImage)
         {
-            return Write(bitmapImage, out string path);
+            return Write(bitmapImage, out _);
         }
     }
 }

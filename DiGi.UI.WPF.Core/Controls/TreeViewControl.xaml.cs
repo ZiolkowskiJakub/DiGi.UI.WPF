@@ -9,14 +9,14 @@ namespace DiGi.UI.WPF.Core.Controls
     /// </summary>
     public partial class TreeViewControl : UserControl
     {
-        public event TreeViewItemAddingEventHandler ItemAdding;
+        public event TreeViewItemAddingEventHandler? ItemAdding;
 
         public TreeViewControl()
         {
             InitializeComponent();
         }
 
-        public List<T> GetItems<T>(bool selected = true)
+        public List<T>? GetItems<T>(bool selected = true)
         {
             return Query.TagItems<T, TreeViewItem>(TreeView_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
@@ -30,19 +30,19 @@ namespace DiGi.UI.WPF.Core.Controls
                 return;
             }
 
-            Func<TreeViewItem, ItemPath, bool> matchFunc = new Func<TreeViewItem, ItemPath, bool>( (treeViewItem, itemPath) => 
+            Func<TreeViewItem?, ItemPath?, bool> matchFunc = new( (treeViewItem, itemPath) => 
             {
                 if(treeViewItem == null || itemPath == null)
                 {
                     return false;
                 }
 
-                string name = treeViewItem.Header?.ToString();
+                string? name = treeViewItem.Header?.ToString();
 
                 return name == itemPath.Name;
             });
 
-            Func<ItemPath, TreeViewItem> createFunc = new Func<ItemPath, TreeViewItem>((itemPath) => 
+            Func<ItemPath?, TreeViewItem?> createFunc = new((itemPath) => 
             {
                 if(itemPath == null)
                 {
@@ -54,18 +54,18 @@ namespace DiGi.UI.WPF.Core.Controls
 
             foreach (T value in values)
             {
-                TreeViewItemAddingEventArgs itemAddingEventArgs = new TreeViewItemAddingEventArgs(value);
-                ItemAdding?.Invoke(this, itemAddingEventArgs);
+                TreeViewItemAddingEventArgs treeViewItemAddingEventArgs = new(value);
+                ItemAdding?.Invoke(this, treeViewItemAddingEventArgs);
 
-                ItemPath path = new ItemPath("Items");
-                string name = value?.ToString();
-                if (itemAddingEventArgs.Handled)
+                ItemPath? path = new ("Items");
+                string? name = value?.ToString();
+                if (treeViewItemAddingEventArgs.Handled)
                 {
-                    name = itemAddingEventArgs.Name;
-                    path = itemAddingEventArgs.Path;
+                    name = treeViewItemAddingEventArgs.Name;
+                    path = treeViewItemAddingEventArgs.Path;
                 }
 
-                TreeViewItem treeViewItem = Modify.Update(TreeView_Main.Items, path, matchFunc, createFunc);
+                TreeViewItem? treeViewItem = Modify.Update(TreeView_Main.Items, path, matchFunc, createFunc);
                 if(treeViewItem == null)
                 {
                     continue;

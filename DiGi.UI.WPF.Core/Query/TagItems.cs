@@ -16,21 +16,20 @@ namespace DiGi.UI.WPF.Core
                 throw new ArgumentNullException(nameof(selectedFunc));
             }
 
-            List<TItem> result = new List<TItem>();
+            List<TItem> result = [];
             foreach(object @object in itemCollection)
             {
-                UControl? control = @object as UControl;
-                if (control == null)
+                if (@object is not UControl control)
                 {
                     continue;
                 }
 
                 object tag = control.Tag;
-                if (tag is TItem)
+                if (tag is TItem item)
                 {
                     if (!(selected && selectedFunc != null && !selectedFunc.Invoke(control)))
                     {
-                        result.Add((TItem)tag);
+                        result.Add(item);
                     }
                 }
 

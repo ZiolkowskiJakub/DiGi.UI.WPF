@@ -6,23 +6,36 @@ namespace DiGi.UI.WPF.Core.Classes
 {
     public abstract class WindowWorker<TWindow> : VisualWorker where TWindow : System.Windows.Window
     {
-        protected TWindow window;
+        protected TWindow? window;
 
         public WindowWorker()
+         : this(null)
+        {
+
+        }
+
+        public WindowWorker(TWindow? window)
             : base()
         {
+            this.window = window;
+
             backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
         }
 
-        public System.Windows.Window Owner
+        public System.Windows.Window? Owner
         {
             get
             {
-                return window.Owner;
+                return window?.Owner;
             }
 
             set
             {
+                if(window is null)
+                {
+                    return;
+                }
+
                 window.Owner = value;
             }
         }
@@ -30,6 +43,11 @@ namespace DiGi.UI.WPF.Core.Classes
         public override void Run()
         {
             base.Run();
+
+            if(window is null)
+            {
+                return;
+            }
 
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
@@ -39,6 +57,11 @@ namespace DiGi.UI.WPF.Core.Classes
 
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
+            if (window is null)
+            {
+                return;
+            }
+
             // Close the ProgressBarWindow on the UI thread
             window.Dispatcher.Invoke(() =>
             {

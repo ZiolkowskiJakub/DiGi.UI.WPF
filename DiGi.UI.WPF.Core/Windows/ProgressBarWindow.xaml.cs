@@ -13,7 +13,7 @@ namespace DiGi.UI.WPF.Core.Windows
             InitializeComponent();
         }
 
-        public void Update(double value, string text = null)
+        public void Update(double value, string? text = null)
         {
             ProgressBar_Main.Value = value;
             Label_Main.Content = text;

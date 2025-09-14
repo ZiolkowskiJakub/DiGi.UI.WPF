@@ -8,7 +8,7 @@ namespace DiGi.UI.WPF.Core.Classes
        
         private string? name = null;
         
-        public ItemAddingEventArgs(object item)
+        public ItemAddingEventArgs(object? item)
         {
             Item = item;
         }
@@ -22,7 +22,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
         }
 
-        public object Item { get; }
+        public object? Item { get; }
         
         public string? Name
         {

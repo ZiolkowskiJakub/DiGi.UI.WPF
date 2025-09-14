@@ -25,10 +25,10 @@ namespace DiGi.UI.WPF.Core.Windows
         }
 
         
-        public event ListBoxItemAddingEventHandler ItemAdding;
+        public event ListBoxItemAddingEventHandler? ItemAdding;
 
         
-        public event SelectionChangedEventHandler SelectionChanged;
+        public event SelectionChangedEventHandler? SelectionChanged;
 
         public SelectionMode SelectionMode
         {
@@ -43,14 +43,14 @@ namespace DiGi.UI.WPF.Core.Windows
             }
         }
 
-        public List<T> GetItems<T>(bool selected = true)
+        public List<T>? GetItems<T>(bool selected = true)
         {
             return ListBoxControl_Main.GetItems<T>(selected);
         }
 
         public void SetItems<T>(IEnumerable<T> values)
         {
-            ListBoxControl_Main.SetItems<T>(values);
+            ListBoxControl_Main.SetItems(values);
         }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)

@@ -17,9 +17,9 @@ namespace DiGi.UI.WPF.Core.Controls
             SetEnabled();
         }
 
-        public event SelectionChangedEventHandler SelectionChanged;
+        public event SelectionChangedEventHandler? SelectionChanged;
 
-        public event ListBoxItemAddingEventHandler ItemAdding;
+        public event ListBoxItemAddingEventHandler? ItemAdding;
        
         public SelectionMode SelectionMode
         {
@@ -35,7 +35,7 @@ namespace DiGi.UI.WPF.Core.Controls
             }
         }
 
-        public List<T> GetItems<T>(bool selected = true)
+        public List<T>? GetItems<T>(bool selected = true)
         {
             return Query.TagItems<T, ListBoxItem>(ListBox_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
@@ -51,10 +51,10 @@ namespace DiGi.UI.WPF.Core.Controls
 
             foreach (T value in values)
             {
-                ListBoxItemAddingEventArgs itemAddingEventArgs = new ListBoxItemAddingEventArgs(value);
+                ListBoxItemAddingEventArgs itemAddingEventArgs = new (value);
                 ItemAdding?.Invoke(this, itemAddingEventArgs);
 
-                string text = value?.ToString();
+                string? text = value?.ToString();
                 if(itemAddingEventArgs.Handled)
                 {
                     text = itemAddingEventArgs.Name;
@@ -90,7 +90,7 @@ namespace DiGi.UI.WPF.Core.Controls
 
             if (ListBox_Main.Items.Count != 0)
             {
-                ListBox_Main.SelectedItems.Add(ListBox_Main.Items[ListBox_Main.Items.Count - 1]);
+                ListBox_Main.SelectedItems.Add(ListBox_Main.Items[^1]);
             }
         }
 

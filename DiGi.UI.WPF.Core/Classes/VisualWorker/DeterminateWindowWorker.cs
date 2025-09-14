@@ -6,20 +6,17 @@ namespace DiGi.UI.WPF.Core.Classes
 {    public class DeterminateWindowWorker : ProgressBarWindowWorker, IDeterminateWorker
     {
         public DeterminateWindowWorker()
-            : this(null)
-        {
-
-        }
-
-        public DeterminateWindowWorker(System.Windows.Window owner)
             :base()
         {
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
 
-            Dispatcher.CurrentDispatcher.Invoke(() =>
+            if(window is not null)
             {
-                window.IsIndeterminate = false;
-            });
+                Dispatcher.CurrentDispatcher.Invoke(() =>
+                {
+                    window.IsIndeterminate = false;
+                });
+            }
         }
 
         public double Maximum { get; set; } = 100;
@@ -38,6 +35,11 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             base.Run();
 
+            if(window is null)
+            {
+                return;
+            }
+
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
                 window.Maximum = Maximum;
@@ -46,6 +48,11 @@ namespace DiGi.UI.WPF.Core.Classes
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
+            if(window is null)
+            {
+                return;
+            }
+
             window.Dispatcher.Invoke(() =>
             {
                 window.Update(Maximum * (Convert.ToDouble(e.ProgressPercentage) / 100), e.UserState as string);

@@ -24,7 +24,7 @@ namespace DiGi.UI.WPF.Core.Windows
 
         }
 
-        public event TreeViewItemAddingEventHandler ItemAdding;
+        public event TreeViewItemAddingEventHandler? ItemAdding;
         
         public void CollapseAll()
         {
@@ -36,7 +36,7 @@ namespace DiGi.UI.WPF.Core.Windows
             TreeViewControl_Main.ExpandaAll();
         }
 
-        public List<T> GetItems<T>(bool selected = true)
+        public List<T>? GetItems<T>(bool selected = true)
         {
             return TreeViewControl_Main.GetItems<T>(selected);
         }

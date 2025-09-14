@@ -6,9 +6,9 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Query
     {
-        public static string? Path(this System.Windows.Window window, string fileTypeName, string fileExtension)
+        public static string? Path(this System.Windows.Window? window, string fileTypeName, string fileExtension)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new ()
             {
                 Title = string.Format("Select {0}", fileTypeName),
                 Filter = string.Format("{0} (*.{1})|*.{1}|All Files (*.*)|*.*", fileTypeName, fileExtension),
@@ -25,9 +25,9 @@ namespace DiGi.UI.WPF.Core
             return openFileDialog.FileName;
         }
 
-        public static string? Path(this System.Windows.Window window, DiGi.Core.IO.Classes.FileFilter fileFilter = null, bool allFiles = false)
+        public static string? Path(this System.Windows.Window? window, DiGi.Core.IO.Classes.FileFilter? fileFilter = null, bool allFiles = false)
         {
-            List<DiGi.Core.IO.Classes.FileFilter> fileFilters = new List<DiGi.Core.IO.Classes.FileFilter>();
+            List<DiGi.Core.IO.Classes.FileFilter> fileFilters = [];
             if (fileFilter == null)
             {
                 fileFilters.Add(DiGi.Core.IO.Create.FileFilter_AllFiles());
@@ -41,9 +41,9 @@ namespace DiGi.UI.WPF.Core
                 }
             }
 
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new ()
             {
-                Title = string.Format("Select {0}", fileFilter.Name),
+                Title = string.Format("Select {0}", fileFilter?.Name),
                 Filter = DiGi.Core.IO.Query.Filter(fileFilters?.ToArray()),
                 FilterIndex = 1,
                 Multiselect = false
@@ -58,11 +58,11 @@ namespace DiGi.UI.WPF.Core
             return openFileDialog.FileName;
         }
 
-        public static string? Path(this System.Windows.Window window, string title, IEnumerable<DiGi.Core.IO.Classes.FileFilter> fileFilters)
+        public static string? Path(this System.Windows.Window? window, string? title, IEnumerable<DiGi.Core.IO.Classes.FileFilter>? fileFilters)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new ()
             {
-                Title = title == null ? "Select file" : title,
+                Title = title ?? "Select file",
                 Filter = DiGi.Core.IO.Query.Filter(fileFilters?.ToArray()),
                 FilterIndex = 1,
                 Multiselect = false

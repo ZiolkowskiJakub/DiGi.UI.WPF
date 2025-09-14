@@ -4,7 +4,7 @@
     {
         private bool? isChecked;
 
-        public CheckBoxTreeViewItemAddingEventArgs(object item)
+        public CheckBoxTreeViewItemAddingEventArgs(object? item)
             : base(item)
         {
 

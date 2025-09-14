@@ -4,7 +4,7 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Query
     {
-        public static FileFilter FileFilter(string path)
+        public static FileFilter? FileFilter(string? path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -12,17 +12,17 @@ namespace DiGi.UI.WPF.Core
             }
 
             string extension = System.IO.Path.GetExtension(path).ToLower().Trim();
-            if (extension.StartsWith("."))
+            if (!string.IsNullOrWhiteSpace(extension) && extension.StartsWith('.'))
             {
-                extension = extension.Substring(1);
+                extension = extension[1..];
             }
 
-            if (Constants.FileFilter.Jpeg.Extensions.Contains(extension))
+            if (Constants.FileFilter.Jpeg.Extensions!.Contains(extension))
             {
                 return Constants.FileFilter.Jpeg;
             }
 
-            if (Constants.FileFilter.Png.Extensions.Contains(extension))
+            if (Constants.FileFilter.Png.Extensions!.Contains(extension))
             {
                 return Constants.FileFilter.Png;
             }

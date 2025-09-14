@@ -11,7 +11,7 @@ namespace DiGi.UI.WPF.Application.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int maximum = 80;
+        private readonly int maximum = 80;
 
         public MainWindow()
         {
@@ -20,7 +20,7 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
-            Query.ShowProgress((IDeterminateWorker determinateWorker) =>
+            Query.ShowProgress(determinateWorker =>
             {
                 Dispatcher.Invoke(() =>
                 {
@@ -42,9 +42,9 @@ namespace DiGi.UI.WPF.Application.Windows
                 {
                     Button_Start.IsEnabled = true;
                 });
-            }, this, "Calculating...");
+            }, "Calculating...");
 
-            Query.ShowProgress((IIndeterminateWorker worker) =>
+            Query.ShowProgress(worker =>
             {
                 Dispatcher.Invoke(() =>
                 {
@@ -84,12 +84,12 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void Button_ShowWindow_Click(object sender, RoutedEventArgs e)
         {
-            List<string> values = new List<string>()
-            {
+            List<string> values =
+            [
                 "ONE TWO THREE",
                 "TWO TWO ONE",
                 "TWO TWO TWO"
-            };
+            ];
 
             bool? result;
             List<string>? selectedValues = null;
@@ -113,7 +113,7 @@ namespace DiGi.UI.WPF.Application.Windows
             //    selectedValues = listBoxWindow.GetItems<string>(false);
             //}
 
-            CheckBoxTreeViewWindow treeViewWindow = new CheckBoxTreeViewWindow("Test Window");
+            CheckBoxTreeViewWindow treeViewWindow = new("Test Window");
             treeViewWindow.ItemAdding += (sender, e) =>
             {
                 string? @string = e.Item as string;

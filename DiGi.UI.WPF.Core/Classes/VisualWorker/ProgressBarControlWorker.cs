@@ -13,7 +13,7 @@ namespace DiGi.UI.WPF.Core.Classes
             backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
         }
 
-        public string Text
+        public string? Text
         {
             get
             {

@@ -12,15 +12,18 @@ namespace DiGi.UI.WPF.Core.Classes
 
         }
 
-        public IndeterminateWindowWorker(System.Windows.Window owner)
+        public IndeterminateWindowWorker(System.Windows.Window? owner)
             : base(owner)
         {
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
 
-            Dispatcher.CurrentDispatcher.Invoke(() =>
+            if (window is not null)
             {
-                window.IsIndeterminate = true;
-            });
+                Dispatcher.CurrentDispatcher.Invoke(() =>
+                {
+                    window.IsIndeterminate = true;
+                });
+            }
         }
 
         public void Report(string text)
@@ -30,10 +33,15 @@ namespace DiGi.UI.WPF.Core.Classes
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            window.Dispatcher.Invoke(() =>
+            if (window is null)
             {
-                window.Update(e.ProgressPercentage, e.UserState as string);
-            });
+                return;
+            }
+
+            window.Dispatcher.Invoke(() =>
+                {
+                    window.Update(e.ProgressPercentage, e?.UserState as string);
+                });
         }
     }
 }

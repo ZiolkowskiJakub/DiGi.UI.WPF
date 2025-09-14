@@ -10,6 +10,17 @@
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<!-- Redirect AssemblyAttributes.cs so each project has its own -->
+		<TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)$(MSBuildProjectName).AssemblyAttributes.cs</TargetFrameworkMonikerAssemblyAttributesPath>
+		<!-- Avoid duplicate TargetFrameworkAttribute -->
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- Prevent duplicate 'Compile' inclusion of the generated AssemblyAttributes.cs -->
+		<Compile Remove="$(IntermediateOutputPath)$(MSBuildProjectName).AssemblyAttributes.cs" />
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
     <PackageReference Include="System.Text.Json" Version="9.0.6" />

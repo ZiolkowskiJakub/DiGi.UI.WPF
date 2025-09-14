@@ -6,7 +6,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static string[]? Paths(this System.Windows.Window window, string fileTypeName, string fileExtension)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new ()
             {
                 Title = string.Format("Select {0}", fileTypeName),
                 Filter = string.Format("{0} (*.{1})|*.{1}|All Files (*.*)|*.*", fileTypeName, fileExtension),

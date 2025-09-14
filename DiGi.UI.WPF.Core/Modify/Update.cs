@@ -5,20 +5,20 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Modify
     {
-        public static TreeViewItem? Update(this ItemCollection itemCollection, ItemPath path, Func<TreeViewItem, ItemPath, bool> matchFunc, Func<ItemPath, TreeViewItem> createFunc)
+        public static TreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<TreeViewItem?, ItemPath?, bool>? matchFunc, Func<ItemPath?, TreeViewItem?>? createFunc)
         {
             if (itemCollection == null || path == null || matchFunc == null || createFunc == null)
             {
                 return null;
             }
 
-            ItemPath? path_Temp = null;
-            TreeViewItem? treeViewItem = null;
+            TreeViewItem? treeViewItem;
+            ItemPath? path_Temp;
 
             foreach (object @object in itemCollection)
             {
                 treeViewItem = @object as TreeViewItem;
-                if(treeViewItem == null)
+                if (treeViewItem == null)
                 {
                     continue;
                 }

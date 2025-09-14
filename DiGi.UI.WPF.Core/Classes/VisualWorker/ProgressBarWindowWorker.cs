@@ -12,7 +12,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
         }
 
-        public ProgressBarWindowWorker(System.Windows.Window owner)
+        public ProgressBarWindowWorker(System.Windows.Window? owner)
             : base()
         {
             backgroundWorker.WorkerReportsProgress = true;
@@ -26,15 +26,25 @@ namespace DiGi.UI.WPF.Core.Classes
             });
         }
 
-        public string Text
+        public string? Text
         {
             get
             {
+                if(window is null)
+                {
+                    return null;
+                }
+
                 return window.Label_Main.Content.ToString();
             }
 
             set
             {
+                if(window is null)
+                {
+                    return;
+                }
+
                 window.Label_Main.Content = value;
             }
         }

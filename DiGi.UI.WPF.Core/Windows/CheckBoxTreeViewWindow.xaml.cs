@@ -23,7 +23,7 @@ namespace DiGi.UI.WPF.Core.Windows
 
         }
 
-        public event CheckBoxTreeViewItemAddingEventHandler ItemAdding;
+        public event CheckBoxTreeViewItemAddingEventHandler? ItemAdding;
         
         public void CollapseAll()
         {
@@ -42,7 +42,7 @@ namespace DiGi.UI.WPF.Core.Windows
 
         public void SetItems<T>(IEnumerable<T> values)
         {
-            CheckBoxTreeViewControl_Main.SetItems<T>(values);
+            CheckBoxTreeViewControl_Main.SetItems(values);
         }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)

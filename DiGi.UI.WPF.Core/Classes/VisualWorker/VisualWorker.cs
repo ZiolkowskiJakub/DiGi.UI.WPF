@@ -9,8 +9,10 @@ namespace DiGi.UI.WPF.Core.Classes
 
         public VisualWorker()
         {
-            backgroundWorker = new BackgroundWorker();
-            backgroundWorker.WorkerReportsProgress = false;
+            backgroundWorker = new BackgroundWorker
+            {
+                WorkerReportsProgress = false
+            };
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
         }
 

@@ -14,8 +14,7 @@ namespace DiGi.UI.WPF.Core
 
             foreach(object @object in itemCollection)
             {
-                TreeViewItem? treeViewItem = @object as TreeViewItem;
-                if(treeViewItem == null)
+                if (@object is not TreeViewItem treeViewItem)
                 {
                     continue;
                 }

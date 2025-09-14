@@ -5,9 +5,9 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Query
     {
-        public static BitmapEncoder BitmapEncoder(this FileFilter fileFilter)
+        public static BitmapEncoder? BitmapEncoder(this FileFilter? fileFilter)
         {
-            List<string> extensions = fileFilter?.Extensions;
+            List<string>? extensions = fileFilter?.Extensions;
             if (extensions == null || extensions.Count == 0)
             {
                 return null;
@@ -15,7 +15,7 @@ namespace DiGi.UI.WPF.Core
 
             foreach (string extension in extensions)
             {
-                string value = extension?.ToLower()?.Trim();
+                string? value = extension?.ToLower()?.Trim();
                 if (string.IsNullOrWhiteSpace(value))
                 {
                     continue;
