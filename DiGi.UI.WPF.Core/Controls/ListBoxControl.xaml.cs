@@ -17,10 +17,10 @@ namespace DiGi.UI.WPF.Core.Controls
             SetEnabled();
         }
 
-        public event SelectionChangedEventHandler? SelectionChanged;
-
         public event ListBoxItemAddingEventHandler? ItemAdding;
-       
+
+        public event SelectionChangedEventHandler? SelectionChanged;
+        
         public SelectionMode SelectionMode
         {
             get
@@ -35,11 +35,16 @@ namespace DiGi.UI.WPF.Core.Controls
             }
         }
 
+        public void ClearItems()
+        {
+            ListBox_Main.Items.Clear();
+        }
+
         public List<T>? GetItems<T>(bool selected = true)
         {
             return Query.TagItems<T, ListBoxItem>(ListBox_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
-
+        
         public void SetItems<T>(IEnumerable<T> values)
         {
             ListBox_Main.Items.Clear();
@@ -96,7 +101,16 @@ namespace DiGi.UI.WPF.Core.Controls
 
         private void SelectNone()
         {
-            ListBox_Main.SelectedItems.Clear();
+            if (SelectionMode == SelectionMode.Single)
+            {
+                // Single selection mode – use SelectedItem
+                ListBox_Main.SelectedItem = null;
+            }
+            else
+            {
+                // Multiple or extended selection mode – use SelectedItems
+                ListBox_Main.SelectedItems.Clear();
+            }
         }
         
         private void SetEnabled()
