@@ -53,38 +53,18 @@ namespace DiGi.UI.WPF.Core.Controls
                 return;
             }
 
-            Func<TreeViewItem?, ItemPath?, bool> matchFunc = new((treeViewItem, itemPath) =>
-            {
-                if (treeViewItem == null || itemPath == null)
-                {
-                    return false;
-                }
-
-                string? name = null;
-                if (treeViewItem.Header is CheckBox checkBox)
-                {
-                    name = checkBox.Name;
-                }
-                else
-                {
-                    name = treeViewItem.Header?.ToString();
-                }
-
-                return name == itemPath.Name;
-            });
-
-            Func<ItemPath?, TreeViewItem?> createFunc = new((itemPath) =>
+            Func<ItemPath?, ItemPathTreeViewItem?> createFunc = new((itemPath) =>
             {
                 if (itemPath == null)
                 {
                     return null;
                 }
 
-                CheckBox checkBox = new () { Content = itemPath.Name };
+                CheckBox checkBox = new () { Content = itemPath.GetNames().Last() };
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
-                return new TreeViewItem() { Header = checkBox, Tag = itemPath };
+                return new ItemPathTreeViewItem(itemPath) { Header = checkBox };
             });
 
             foreach (T value in values)
@@ -102,8 +82,15 @@ namespace DiGi.UI.WPF.Core.Controls
                     isChecked = itemAddingEventArgs.IsChecked;
                 }
 
-                TreeViewItem? treeViewItem = Modify.Update(TreeView_Main.Items, path, matchFunc, createFunc);
-                if (treeViewItem == null)
+                ItemPathTreeViewItem? itemPathTreeViewItem = Modify.Update(TreeView_Main.Items, path, createFunc);
+                if (itemPathTreeViewItem == null)
+                {
+                    continue;
+                }
+
+                itemPathTreeViewItem.Tag = value;
+
+                if (name == null)
                 {
                     continue;
                 }
@@ -112,8 +99,18 @@ namespace DiGi.UI.WPF.Core.Controls
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
-                treeViewItem.Items.Add(new TreeViewItem() { Header = checkBox, Tag = value });
+                itemPathTreeViewItem.Items.Add(new ValueTreeViewItem(value) { Header = checkBox, Tag = value });
             }
+        }
+
+        private void Button_SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_SelectNone_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void CheckBox_Updated(object sender, RoutedEventArgs e)
@@ -129,16 +126,6 @@ namespace DiGi.UI.WPF.Core.Controls
         private void Update(CheckBox checkBox, bool? isChecked)
         {
             throw new NotImplementedException();
-        }
-
-        private void Button_SelectAll_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_SelectNone_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

@@ -9,11 +9,28 @@ namespace DiGi.UI.WPF.Core.Controls
     /// </summary>
     public partial class TreeViewControl : UserControl
     {
-        public event TreeViewItemAddingEventHandler? ItemAdding;
-
         public TreeViewControl()
         {
             InitializeComponent();
+        }
+
+        public event TreeViewItemAddingEventHandler? ItemAdding;
+
+        public event System.Windows.RoutedPropertyChangedEventHandler<object>? SelectedItemChanged;
+
+        public void ClearItems()
+        {
+            TreeView_Main.Items.Clear();
+        }
+
+        public void CollapseAll()
+        {
+            Modify.CollapseAll(TreeView_Main.Items);
+        }
+
+        public void ExpandaAll()
+        {
+            Modify.ExpandAll(TreeView_Main.Items);
         }
 
         public List<T>? GetItems<T>(bool selected = true)
@@ -30,26 +47,14 @@ namespace DiGi.UI.WPF.Core.Controls
                 return;
             }
 
-            Func<TreeViewItem?, ItemPath?, bool> matchFunc = new( (treeViewItem, itemPath) => 
+            Func<ItemPath?, ItemPathTreeViewItem?> createFunc = new((itemPath) =>
             {
-                if(treeViewItem == null || itemPath == null)
-                {
-                    return false;
-                }
-
-                string? name = treeViewItem.Header?.ToString();
-
-                return name == itemPath.Name;
-            });
-
-            Func<ItemPath?, TreeViewItem?> createFunc = new((itemPath) => 
-            {
-                if(itemPath == null)
+                if (itemPath == null)
                 {
                     return null;
                 }
 
-                return new TreeViewItem() { Header = itemPath.Name, Tag = itemPath };
+                return new ItemPathTreeViewItem(itemPath) { Header = itemPath.GetNames().Last() };
             });
 
             foreach (T value in values)
@@ -59,26 +64,31 @@ namespace DiGi.UI.WPF.Core.Controls
 
                 ItemPath? path = new ("Items");
                 string? name = value?.ToString();
+                if(value is ItemPath path_Temp)
+                {
+                    path = path_Temp;
+                    name = null;
+                }
+
                 if (treeViewItemAddingEventArgs.Handled)
                 {
                     name = treeViewItemAddingEventArgs.Name;
                     path = treeViewItemAddingEventArgs.Path;
                 }
 
-                TreeViewItem? treeViewItem = Modify.Update(TreeView_Main.Items, path, matchFunc, createFunc);
-                if(treeViewItem == null)
+                ItemPathTreeViewItem? itemPathTreeViewItem = Modify.Update(TreeView_Main.Items, path, createFunc);
+                if(itemPathTreeViewItem != null)
+                {
+                    itemPathTreeViewItem.Tag = value;
+                }
+
+                if (name == null)
                 {
                     continue;
                 }
 
-
-                treeViewItem.Items.Add(new TreeViewItem() { Header = name, Tag = value });
+                (itemPathTreeViewItem?.Items ?? TreeView_Main.Items).Add(new ValueTreeViewItem(value) { Header = name, Tag = value });
             }
-        }
-
-        private void Button_Expand_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Modify.ExpandAll(TreeView_Main.Items);
         }
 
         private void Button_Collapse_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -86,14 +96,14 @@ namespace DiGi.UI.WPF.Core.Controls
             Modify.CollapseAll(TreeView_Main.Items);
         }
 
-        public void ExpandaAll()
+        private void Button_Expand_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Modify.ExpandAll(TreeView_Main.Items);
         }
 
-        public void CollapseAll()
+        private void TreeView_Main_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
-            Modify.CollapseAll(TreeView_Main.Items);
+            SelectedItemChanged?.Invoke(this, e);
         }
     }
 }

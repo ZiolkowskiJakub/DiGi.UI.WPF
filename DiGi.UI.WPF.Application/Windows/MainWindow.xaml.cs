@@ -18,6 +18,57 @@ namespace DiGi.UI.WPF.Application.Windows
             InitializeComponent();
         }
 
+        private void Button_ShowWindow_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> values =
+            [
+                "ONE TWO THREE",
+                "TWO TWO ONE",
+                "TWO TWO TWO"
+            ];
+
+            bool? result;
+            List<string>? selectedValues = null;
+
+            //ListBoxWindow listBoxWindow = new ListBoxWindow();
+            //listBoxWindow.ItemAdding += (sender, e) =>
+            //{
+            //    string? @string = e.Item as string;
+
+            //    e.Name = @string;
+            //};
+
+            //listBoxWindow.SetItems(values);
+
+            //result = listBoxWindow.ShowDialog();
+
+
+            //if (result != null && result.Value)
+            //{
+            //    selectedValues = listBoxWindow.GetItems<string>(true);
+            //    selectedValues = listBoxWindow.GetItems<string>(false);
+            //}
+
+            CheckBoxTreeViewWindow treeViewWindow = new("Test Window");
+            treeViewWindow.ItemAdding += (sender, e) =>
+            {
+                string? @string = e.Item as string;
+
+                e.Path = new ItemPath(@string?.Split(" "));
+                e.Name = @string;
+            };
+
+            treeViewWindow.SetItems(values);
+
+            result = treeViewWindow.ShowDialog();
+
+            selectedValues = null;
+            if (result != null && result.Value)
+            {
+                selectedValues = treeViewWindow.GetItems<string>(true);
+            }
+        }
+
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
             Query.ShowProgress(determinateWorker =>
@@ -81,56 +132,35 @@ namespace DiGi.UI.WPF.Application.Windows
             //progressVisualWorker.Maximum = maximum;
             //progressVisualWorker.Run();
         }
-
-        private void Button_ShowWindow_Click(object sender, RoutedEventArgs e)
+        
+        private void Button_TreeView_Click(object sender, RoutedEventArgs e)
         {
-            List<string> values =
+            List<string> strings =
             [
-                "ONE TWO THREE",
+                "ONE TWO",
+                "ONE TWO",
+                "ONE TWO THREE THREE",
+                "ONE TWO THREE THREE",
+                "TWO TWO ONE TWO",
+                "TWO TWO TWO",
                 "TWO TWO ONE",
-                "TWO TWO TWO"
+                "ONE THREE",
+                "TWO TWO ONE FOUR"
             ];
 
-            bool? result;
-            List<string>? selectedValues = null;
+            TreeViewControl_Main.ItemAdding += TreeViewControl_Main_ItemAdding;
 
-            //ListBoxWindow listBoxWindow = new ListBoxWindow();
-            //listBoxWindow.ItemAdding += (sender, e) =>
-            //{
-            //    string? @string = e.Item as string;
+            TreeViewControl_Main.SetItems(strings);
 
-            //    e.Name = @string;
-            //};
+            TreeViewControl_Main.ItemAdding -= TreeViewControl_Main_ItemAdding;
+        }
 
-            //listBoxWindow.SetItems(values);
+        private void TreeViewControl_Main_ItemAdding(object sender, TreeViewItemAddingEventArgs e)
+        {
+            string[] values = ((string)e.Item).Split(" ");
 
-            //result = listBoxWindow.ShowDialog();
-
-
-            //if (result != null && result.Value)
-            //{
-            //    selectedValues = listBoxWindow.GetItems<string>(true);
-            //    selectedValues = listBoxWindow.GetItems<string>(false);
-            //}
-
-            CheckBoxTreeViewWindow treeViewWindow = new("Test Window");
-            treeViewWindow.ItemAdding += (sender, e) =>
-            {
-                string? @string = e.Item as string;
-
-                e.Path = new ItemPath(@string?.Split(" "));
-                e.Name = @string;
-            };
-
-            treeViewWindow.SetItems(values);
-
-            result = treeViewWindow.ShowDialog();
-
-            selectedValues = null;
-            if (result != null && result.Value)
-            {
-                selectedValues = treeViewWindow.GetItems<string>(true);
-            }
+            e.Path = new ItemPath(values);
+            e.Name = (string)e.Item;
         }
 
         //private void ProgressVisualWorker_DoWork(object? sender, DoWorkEventArgs e)

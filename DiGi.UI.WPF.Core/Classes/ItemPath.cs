@@ -29,6 +29,12 @@ namespace DiGi.UI.WPF.Core.Classes
 
         }
 
+        public ItemPath(ItemPath? path)
+            : base(path)
+        {
+
+        }   
+
         protected override ItemPath Create(string? name)
         {
             return new ItemPath(name);

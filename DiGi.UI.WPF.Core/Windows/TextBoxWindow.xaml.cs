@@ -45,7 +45,7 @@ namespace DiGi.UI.WPF.Core.Windows
             }
         }
 
-        public Func<string, bool> Validation
+        public Func<string, bool>? Validation
         {
             get
             {

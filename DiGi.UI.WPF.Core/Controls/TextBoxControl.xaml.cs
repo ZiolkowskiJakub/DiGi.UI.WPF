@@ -31,7 +31,7 @@ namespace DiGi.UI.WPF.Core.Controls
             }
         }
 
-        public Func<string, bool> Validation { get; set; }
+        public Func<string, bool>? Validation { get; set; }
         
         public string? Value
         {

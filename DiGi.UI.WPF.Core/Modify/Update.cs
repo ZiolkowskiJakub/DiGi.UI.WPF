@@ -5,53 +5,106 @@ namespace DiGi.UI.WPF.Core
 {
     public static partial class Modify
     {
-        public static TreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<TreeViewItem?, ItemPath?, bool>? matchFunc, Func<ItemPath?, TreeViewItem?>? createFunc)
+        public static ItemPathTreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<ItemPath?, ItemPathTreeViewItem?>? createFunc)
         {
-            if (itemCollection == null || path == null || matchFunc == null || createFunc == null)
+            return Update(itemCollection, path, createFunc, null);
+        }
+
+        public static ItemPathTreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<ItemPath?, ItemPathTreeViewItem?>? createFunc, ItemPath? parentPath)
+        {
+            if (itemCollection == null || path == null || createFunc == null)
             {
                 return null;
             }
 
-            TreeViewItem? treeViewItem;
+            List<string> names = path.GetNames();
+            if (names == null || names.Count == 0)
+            {
+                return null;
+            }
+
+            List<string>? parentNames = parentPath?.GetNames();
+            if (parentNames != null && parentNames.Count >= names.Count)
+            {
+                return null;
+            }
+
+            Func<ItemPathTreeViewItem?, ItemPath?, bool> matchFunc = new((itemPathTreeViewItem, itemPath) =>
+            {
+                if (itemPathTreeViewItem == null || itemPath == null)
+                {
+                    return false;
+                }
+
+                if (itemPathTreeViewItem.ItemPath is not ItemPath itemPath_TreeViewItem)
+                {
+                    return false;
+                }
+
+                List<string> names = itemPath.GetNames();
+                List<string> names_TreeViewItem = itemPath_TreeViewItem.GetNames();
+
+                if (names_TreeViewItem.Count > names.Count)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < names_TreeViewItem.Count; i++)
+                {
+                    if (names_TreeViewItem[i] != names[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            ItemPathTreeViewItem? itemPathTreeViewItem;
             ItemPath? path_Temp;
 
             foreach (object @object in itemCollection)
             {
-                treeViewItem = @object as TreeViewItem;
-                if (treeViewItem == null)
+                itemPathTreeViewItem = @object as ItemPathTreeViewItem;
+                if (itemPathTreeViewItem == null)
                 {
                     continue;
                 }
 
-                if (matchFunc.Invoke(treeViewItem, path))
+                if (matchFunc.Invoke(itemPathTreeViewItem, path))
                 {
-                    path_Temp = path.Path;
-
-                    if (path_Temp == null)
+                    path_Temp = itemPathTreeViewItem.ItemPath;
+                    if (path_Temp is not null && path.Equals(path_Temp))
                     {
-                        return treeViewItem;
+                        return itemPathTreeViewItem;
                     }
 
-                    return Update(treeViewItem.Items, path_Temp, matchFunc, createFunc);
+                    return Update(itemPathTreeViewItem.Items, path, createFunc, path_Temp);
                 }
             }
 
-            treeViewItem = createFunc.Invoke(path);
-            if (treeViewItem == null)
+            if (parentPath is null)
+            {
+                path_Temp = new ItemPath(names[0]);
+            }
+            else
+            {
+                path_Temp = new ItemPath(names.GetRange(0, parentPath.GetNames().Count + 1));
+            }
+
+            itemPathTreeViewItem = createFunc.Invoke(path_Temp);
+            if (itemPathTreeViewItem == null)
             {
                 return null;
             }
 
-            itemCollection.Add(treeViewItem);
-
-            path_Temp = path.Path;
-
-            if (path_Temp == null)
+            itemCollection.Add(itemPathTreeViewItem);
+            if (path.Equals(path_Temp))
             {
-                return treeViewItem;
+                return itemPathTreeViewItem;
             }
 
-            return Update(treeViewItem.Items, path_Temp, matchFunc, createFunc);
+            return Update(itemPathTreeViewItem.Items, path, createFunc, path_Temp);
         }
     }
 }

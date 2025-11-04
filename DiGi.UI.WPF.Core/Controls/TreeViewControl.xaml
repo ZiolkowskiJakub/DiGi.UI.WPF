@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TreeView x:Name="TreeView_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <TreeView x:Name="TreeView_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectedItemChanged="TreeView_Main_SelectedItemChanged"/>
         <Button x:Name="Button_Expand" Grid.Row="1" Width="70" Height="21" Margin="0,0,0,5.4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Expand_Click" Content="Expand"/>
         <Button x:Name="Button_Collapse" Grid.Row="1" Width="70" Height="21" Margin="75,0,0,5.4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Collapse_Click" Content="Collapse"/>
     </Grid>
