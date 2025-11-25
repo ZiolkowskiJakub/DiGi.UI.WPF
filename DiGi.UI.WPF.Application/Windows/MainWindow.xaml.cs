@@ -157,7 +157,12 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void TreeViewControl_Main_ItemAdding(object sender, TreeViewItemAddingEventArgs e)
         {
-            string[] values = ((string)e.Item).Split(" ");
+            if(e.Item is not string text)
+            {
+                return;
+            }
+
+            string[] values = text.Split(" ");
 
             e.Path = new ItemPath(values);
             e.Name = (string)e.Item;

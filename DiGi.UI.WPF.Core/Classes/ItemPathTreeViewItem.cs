@@ -4,7 +4,7 @@ namespace DiGi.UI.WPF.Core.Classes
 {
     public class ItemPathTreeViewItem : TreeViewItem
     {
-        private ItemPath? itemPath;
+        private readonly ItemPath? itemPath;
 
         public ItemPathTreeViewItem(ItemPath itemPath)
             : base()

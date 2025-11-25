@@ -4,7 +4,7 @@ namespace DiGi.UI.WPF.Core.Classes
 {
     public class ValueTreeViewItem : TreeViewItem
     {
-        private object? value;
+        private readonly object? value;
 
         public ValueTreeViewItem(object? value)
             : base()
