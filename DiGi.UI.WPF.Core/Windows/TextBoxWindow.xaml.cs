@@ -16,6 +16,7 @@ namespace DiGi.UI.WPF.Core.Windows
         {
             InitializeComponent();
         }
+
         public TextBoxWindow(string? title, string? text, object? value)
         {
             InitializeComponent();
