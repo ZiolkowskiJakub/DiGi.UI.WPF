@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes

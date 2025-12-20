@@ -1,16 +1,30 @@
-﻿using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Core.Delegates;
+using DiGi.UI.WPF.Core.Interfaces;
 using System.Windows;
+
 
 namespace DiGi.UI.WPF.Core.Windows
 {
     /// <summary>
-    /// Interaction logic for ProgressBarWindow.xaml
+    /// Interaction logic for CancellableProgressBarWindow.xaml
     /// </summary>
-    public partial class ProgressBarWindow : Window, IWindow
+    public partial class CancellableProgressBarWindow : Window, IWindow
     {
-        public ProgressBarWindow()
+        private bool cancellationPending = false;
+
+        public CancellableProgressBarWindow()
         {
             InitializeComponent();
+        }
+
+        public event CancellingEventHandler? Cancelling;
+        
+        public bool CancellationPending
+        {
+            get
+            {
+                return cancellationPending;
+            }
         }
 
         public bool IsIndeterminate
@@ -44,6 +58,13 @@ namespace DiGi.UI.WPF.Core.Windows
         {
             ProgressBar_Main.Value = value;
             Label_Main.Content = text;
+        }
+
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            cancellationPending = true;
+
+            Cancelling?.Invoke(sender, new Classes.CancellingEventArgs());
         }
     }
 }

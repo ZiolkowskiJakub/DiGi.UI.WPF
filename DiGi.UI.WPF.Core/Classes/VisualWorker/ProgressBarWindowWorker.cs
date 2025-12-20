@@ -1,5 +1,4 @@
 ﻿using DiGi.UI.WPF.Core.Windows;
-using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
@@ -16,6 +15,7 @@ namespace DiGi.UI.WPF.Core.Classes
             : base()
         {
             backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.WorkerSupportsCancellation = false;
 
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {

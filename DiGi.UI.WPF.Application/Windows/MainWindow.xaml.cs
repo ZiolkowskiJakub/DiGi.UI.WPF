@@ -1,5 +1,4 @@
-﻿using DiGi.Core.Interfaces;
-using DiGi.UI.WPF.Core;
+﻿using DiGi.UI.WPF.Core;
 using DiGi.UI.WPF.Core.Classes;
 using DiGi.UI.WPF.Core.Windows;
 using System.Windows;
@@ -71,6 +70,72 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
+            CancellableIndeterminateWindowWorkerTest();
+        }
+
+        private void Button_TreeView_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> strings =
+            [
+                "ONE TWO",
+                "ONE TWO",
+                "ONE TWO THREE THREE",
+                "ONE TWO THREE THREE",
+                "TWO TWO ONE TWO",
+                "TWO TWO TWO",
+                "TWO TWO ONE",
+                "ONE THREE",
+                "TWO TWO ONE FOUR"
+            ];
+
+            TreeViewControl_Main.ItemAdding += TreeViewControl_Main_ItemAdding;
+
+            TreeViewControl_Main.SetItems(strings);
+
+            TreeViewControl_Main.ItemAdding -= TreeViewControl_Main_ItemAdding;
+        }
+
+        private void CancellableIndeterminateWindowWorker_DoWork(object? sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Button_Start.IsEnabled = false;
+
+            });
+
+            CancellableIndeterminateWindowWorker cancellableIndeterminateWindowWorker = (CancellableIndeterminateWindowWorker)sender;
+
+            //determinateWorker.Maximum = maximum;
+            for (int i = 1; i <= maximum; i++)
+            {
+                // Simulates work being done
+                Thread.Sleep(1000);
+
+                if (cancellableIndeterminateWindowWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
+                // Reports progress
+                cancellableIndeterminateWindowWorker.Report(i.ToString());
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                Button_Start.IsEnabled = true;
+            });
+        }
+
+        private void CancellableIndeterminateWindowWorkerTest()
+        {
+            CancellableIndeterminateWindowWorker cancellableIndeterminateWindowWorker = new CancellableIndeterminateWindowWorker();
+            cancellableIndeterminateWindowWorker.DoWork += CancellableIndeterminateWindowWorker_DoWork;
+            cancellableIndeterminateWindowWorker.Run();
+        }
+
+        private void DeterminateWorkerTest()
+        {
             Query.ShowProgress(determinateWorker =>
             {
                 Dispatcher.Invoke(() =>
@@ -94,7 +159,17 @@ namespace DiGi.UI.WPF.Application.Windows
                     Button_Start.IsEnabled = true;
                 });
             }, "Calculating...");
+        }
 
+        private void IndeterminateWindowWorkerTest()
+        {
+            //IndeterminateWindowWorker indeterminateProgressVisualWorker = new IndeterminateWindowWorker(this);
+            //indeterminateProgressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
+            //indeterminateProgressVisualWorker.Run();
+        }
+
+        private void IndeterminateWorkerTest()
+        {
             Query.ShowProgress(worker =>
             {
                 Dispatcher.Invoke(() =>
@@ -119,13 +194,10 @@ namespace DiGi.UI.WPF.Application.Windows
                     Button_Start.IsEnabled = true;
                 });
             }, ProgressBarControl_Main, "Calculating...");
+        }
 
-
-            //IndeterminateWindowWorker indeterminateProgressVisualWorker = new IndeterminateWindowWorker(this);
-            //indeterminateProgressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
-            //indeterminateProgressVisualWorker.Run();
-
-
+        private void ProgressVisualWorkerTest()
+        {
             //ProgressVisualWorker progressVisualWorker = new ProgressVisualWorker();
             //progressVisualWorker.Owner = this;
             //progressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
@@ -133,28 +205,6 @@ namespace DiGi.UI.WPF.Application.Windows
             //progressVisualWorker.Run();
         }
         
-        private void Button_TreeView_Click(object sender, RoutedEventArgs e)
-        {
-            List<string> strings =
-            [
-                "ONE TWO",
-                "ONE TWO",
-                "ONE TWO THREE THREE",
-                "ONE TWO THREE THREE",
-                "TWO TWO ONE TWO",
-                "TWO TWO TWO",
-                "TWO TWO ONE",
-                "ONE THREE",
-                "TWO TWO ONE FOUR"
-            ];
-
-            TreeViewControl_Main.ItemAdding += TreeViewControl_Main_ItemAdding;
-
-            TreeViewControl_Main.SetItems(strings);
-
-            TreeViewControl_Main.ItemAdding -= TreeViewControl_Main_ItemAdding;
-        }
-
         private void TreeViewControl_Main_ItemAdding(object sender, TreeViewItemAddingEventArgs e)
         {
             if(e.Item is not string text)

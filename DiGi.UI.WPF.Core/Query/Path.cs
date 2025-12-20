@@ -1,6 +1,4 @@
-﻿using DiGi.Core.IO.Classes;
-using DiGi.UI.WPF.Core.Constants;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace DiGi.UI.WPF.Core
 {

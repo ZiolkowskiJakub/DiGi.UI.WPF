@@ -1,5 +1,4 @@
-﻿using DiGi.UI.WPF.Core.Classes;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace DiGi.UI.WPF.Core
 {

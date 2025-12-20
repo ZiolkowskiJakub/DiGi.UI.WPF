@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DiGi.UI.WPF.Core.Classes
+﻿namespace DiGi.UI.WPF.Core.Classes
 {
     public class ListBoxItemAddingEventArgs : ItemAddingEventArgs
     {
