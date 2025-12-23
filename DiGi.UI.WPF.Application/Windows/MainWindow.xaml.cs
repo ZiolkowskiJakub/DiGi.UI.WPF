@@ -17,6 +17,22 @@ namespace DiGi.UI.WPF.Application.Windows
             InitializeComponent();
         }
 
+        private static void IndeterminateWindowWorkerTest()
+        {
+            //IndeterminateWindowWorker indeterminateProgressVisualWorker = new IndeterminateWindowWorker(this);
+            //indeterminateProgressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
+            //indeterminateProgressVisualWorker.Run();
+        }
+
+        private static void ProgressVisualWorkerTest()
+        {
+            //ProgressVisualWorker progressVisualWorker = new ProgressVisualWorker();
+            //progressVisualWorker.Owner = this;
+            //progressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
+            //progressVisualWorker.Maximum = maximum;
+            //progressVisualWorker.Run();
+        }
+
         private void Button_ShowWindow_Click(object sender, RoutedEventArgs e)
         {
             List<string> values =
@@ -103,7 +119,7 @@ namespace DiGi.UI.WPF.Application.Windows
 
             });
 
-            CancellableIndeterminateWindowWorker cancellableIndeterminateWindowWorker = (CancellableIndeterminateWindowWorker)sender;
+            CancellableIndeterminateWindowWorker? cancellableIndeterminateWindowWorker = sender as CancellableIndeterminateWindowWorker;
 
             //determinateWorker.Maximum = maximum;
             for (int i = 1; i <= maximum; i++)
@@ -111,14 +127,14 @@ namespace DiGi.UI.WPF.Application.Windows
                 // Simulates work being done
                 Thread.Sleep(1000);
 
-                if (cancellableIndeterminateWindowWorker.CancellationPending)
+                if (cancellableIndeterminateWindowWorker is not null && cancellableIndeterminateWindowWorker.CancellationPending)
                 {
                     e.Cancel = true;
                     break;
                 }
 
                 // Reports progress
-                cancellableIndeterminateWindowWorker.Report(i.ToString());
+                cancellableIndeterminateWindowWorker?.Report(i.ToString());
             }
 
             Dispatcher.Invoke(() =>
@@ -129,7 +145,7 @@ namespace DiGi.UI.WPF.Application.Windows
 
         private void CancellableIndeterminateWindowWorkerTest()
         {
-            CancellableIndeterminateWindowWorker cancellableIndeterminateWindowWorker = new CancellableIndeterminateWindowWorker();
+            CancellableIndeterminateWindowWorker cancellableIndeterminateWindowWorker = new();
             cancellableIndeterminateWindowWorker.DoWork += CancellableIndeterminateWindowWorker_DoWork;
             cancellableIndeterminateWindowWorker.Run();
         }
@@ -160,14 +176,7 @@ namespace DiGi.UI.WPF.Application.Windows
                 });
             }, "Calculating...");
         }
-
-        private void IndeterminateWindowWorkerTest()
-        {
-            //IndeterminateWindowWorker indeterminateProgressVisualWorker = new IndeterminateWindowWorker(this);
-            //indeterminateProgressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
-            //indeterminateProgressVisualWorker.Run();
-        }
-
+        
         private void IndeterminateWorkerTest()
         {
             Query.ShowProgress(worker =>
@@ -194,15 +203,6 @@ namespace DiGi.UI.WPF.Application.Windows
                     Button_Start.IsEnabled = true;
                 });
             }, ProgressBarControl_Main, "Calculating...");
-        }
-
-        private void ProgressVisualWorkerTest()
-        {
-            //ProgressVisualWorker progressVisualWorker = new ProgressVisualWorker();
-            //progressVisualWorker.Owner = this;
-            //progressVisualWorker.DoWork += ProgressVisualWorker_DoWork;
-            //progressVisualWorker.Maximum = maximum;
-            //progressVisualWorker.Run();
         }
         
         private void TreeViewControl_Main_ItemAdding(object sender, TreeViewItemAddingEventArgs e)
