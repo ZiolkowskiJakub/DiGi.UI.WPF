@@ -10,7 +10,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public WindowWorker()
          : this(null)
         {
-
         }
 
         public WindowWorker(TWindow? window)
@@ -30,7 +29,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
             set
             {
-                if(window is null)
+                if (window is null)
                 {
                     return;
                 }
@@ -43,7 +42,7 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             base.Run();
 
-            if(window is null)
+            if (window is null)
             {
                 return;
             }

@@ -3,14 +3,15 @@ using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
-{    public class DeterminateWindowWorker : ProgressBarWindowWorker, IDeterminateWorker
+{
+    public class DeterminateWindowWorker : ProgressBarWindowWorker, IDeterminateWorker
     {
         public DeterminateWindowWorker()
-            :base()
+            : base()
         {
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
 
-            if(window is not null)
+            if (window is not null)
             {
                 Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
@@ -35,7 +36,7 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             base.Run();
 
-            if(window is null)
+            if (window is null)
             {
                 return;
             }
@@ -48,7 +49,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            if(window is null)
+            if (window is null)
             {
                 return;
             }

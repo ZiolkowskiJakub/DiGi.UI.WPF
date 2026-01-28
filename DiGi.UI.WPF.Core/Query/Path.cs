@@ -6,7 +6,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static string? Path(this System.Windows.Window? window, string fileTypeName, string fileExtension)
         {
-            OpenFileDialog openFileDialog = new ()
+            OpenFileDialog openFileDialog = new()
             {
                 Title = string.Format("Select {0}", fileTypeName),
                 Filter = string.Format("{0} (*.{1})|*.{1}|All Files (*.*)|*.*", fileTypeName, fileExtension),
@@ -33,13 +33,13 @@ namespace DiGi.UI.WPF.Core
             else
             {
                 fileFilters.Add(fileFilter);
-                if(allFiles)
+                if (allFiles)
                 {
                     fileFilters.Add(DiGi.Core.IO.Create.FileFilter_AllFiles());
                 }
             }
 
-            OpenFileDialog openFileDialog = new ()
+            OpenFileDialog openFileDialog = new()
             {
                 Title = string.Format("Select {0}", fileFilter?.Name),
                 Filter = DiGi.Core.IO.Query.Filter(fileFilters?.ToArray()),
@@ -58,7 +58,7 @@ namespace DiGi.UI.WPF.Core
 
         public static string? Path(this System.Windows.Window? window, string? title, IEnumerable<DiGi.Core.IO.Classes.FileFilter>? fileFilters)
         {
-            OpenFileDialog openFileDialog = new ()
+            OpenFileDialog openFileDialog = new()
             {
                 Title = title ?? "Select file",
                 Filter = DiGi.Core.IO.Query.Filter(fileFilters?.ToArray()),

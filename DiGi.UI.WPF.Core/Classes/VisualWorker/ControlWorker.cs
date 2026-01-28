@@ -7,7 +7,7 @@ namespace DiGi.UI.WPF.Core.Classes
         protected TControl control;
 
         public ControlWorker(TControl control)
-            :base()
+            : base()
         {
             this.control = control;
         }

@@ -9,7 +9,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public CancellableIndeterminateWindowWorker()
             : this(null)
         {
-
         }
 
         public CancellableIndeterminateWindowWorker(System.Windows.Window? owner)

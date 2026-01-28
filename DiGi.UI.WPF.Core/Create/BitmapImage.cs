@@ -28,18 +28,18 @@ namespace DiGi.UI.WPF.Core
 
         public static BitmapImage? BitmapImage(Image? image)
         {
-            if(image is null)
+            if (image is null)
             {
                 return null;
             }
 
             using MemoryStream memoryStream = new();
-            
+
             image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
-            
+
             memoryStream.Position = 0;
 
-            BitmapImage result = new ();
+            BitmapImage result = new();
             result.BeginInit();
             result.CacheOption = BitmapCacheOption.OnLoad;
             result.StreamSource = memoryStream;
@@ -51,7 +51,7 @@ namespace DiGi.UI.WPF.Core
 
         public static BitmapImage BitmapImage(int width, int height, System.Drawing.Color color)
         {
-            WriteableBitmap bitmap = new (width, height, 96, 96, PixelFormats.Bgra32, null);
+            WriteableBitmap bitmap = new(width, height, 96, 96, PixelFormats.Bgra32, null);
 
             // Create pixel data (BGRA format, 4 bytes per pixel)
             int stride = width * 4; // 4 bytes per pixel
@@ -74,7 +74,7 @@ namespace DiGi.UI.WPF.Core
             encoder.Frames.Add(BitmapFrame.Create(bitmap));
             encoder.Save(stream);
 
-            BitmapImage result = new ();
+            BitmapImage result = new();
             result.BeginInit();
             result.CacheOption = BitmapCacheOption.OnLoad;
             result.StreamSource = new MemoryStream(stream.ToArray());
@@ -82,7 +82,6 @@ namespace DiGi.UI.WPF.Core
             result.Freeze();
 
             return result;
-
         }
     }
 }

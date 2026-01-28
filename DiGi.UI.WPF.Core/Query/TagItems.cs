@@ -6,7 +6,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static List<TItem>? TagItems<TItem, UControl>(this ItemCollection itemCollection, bool includeNested = true, bool selected = false, Func<UControl, bool>? selectedFunc = null) where UControl : Control
         {
-            if(itemCollection == null)
+            if (itemCollection == null)
             {
                 return null;
             }
@@ -17,7 +17,7 @@ namespace DiGi.UI.WPF.Core
             }
 
             List<TItem> result = [];
-            foreach(object @object in itemCollection)
+            foreach (object @object in itemCollection)
             {
                 if (@object is not UControl control)
                 {
@@ -33,7 +33,7 @@ namespace DiGi.UI.WPF.Core
                     }
                 }
 
-                if(!includeNested)
+                if (!includeNested)
                 {
                     continue;
                 }
@@ -44,8 +44,8 @@ namespace DiGi.UI.WPF.Core
                     continue;
                 }
 
-                List<TItem>? tagItems = TagItems<TItem, UControl>(itemCollection_Nested, includeNested, selected, selectedFunc); 
-                if(tagItems == null)
+                List<TItem>? tagItems = TagItems<TItem, UControl>(itemCollection_Nested, includeNested, selected, selectedFunc);
+                if (tagItems == null)
                 {
                     continue;
                 }

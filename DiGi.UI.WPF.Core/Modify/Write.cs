@@ -8,7 +8,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static bool Write(BitmapImage? bitmapImage, string? path)
         {
-            if(bitmapImage == null || string.IsNullOrWhiteSpace(path))
+            if (bitmapImage == null || string.IsNullOrWhiteSpace(path))
             {
                 return false;
             }
@@ -29,7 +29,7 @@ namespace DiGi.UI.WPF.Core
         {
             path = null;
 
-            if(bitmapImage == null)
+            if (bitmapImage == null)
             {
                 return false;
             }

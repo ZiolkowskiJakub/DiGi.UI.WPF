@@ -14,7 +14,6 @@ namespace DiGi.UI.WPF.Core.Controls
 
             TextBox_Value.PreviewTextInput += TextBox_Value_PreviewTextInput;
             TextBox_Value.PreviewKeyDown += TextBox_Value_PreviewKeyDown;
-
         }
 
         public string? Text
@@ -31,7 +30,7 @@ namespace DiGi.UI.WPF.Core.Controls
         }
 
         public Func<string, bool>? Validation { get; set; }
-        
+
         public string? Value
         {
             get

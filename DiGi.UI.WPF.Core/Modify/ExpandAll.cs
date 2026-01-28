@@ -6,12 +6,12 @@ namespace DiGi.UI.WPF.Core
     {
         public static void ExpandAll(this ItemCollection itemCollection, bool inverse = false)
         {
-            if(itemCollection == null)
+            if (itemCollection == null)
             {
                 return;
             }
 
-            foreach(object @object in itemCollection)
+            foreach (object @object in itemCollection)
             {
                 if (@object is not TreeViewItem treeViewItem)
                 {

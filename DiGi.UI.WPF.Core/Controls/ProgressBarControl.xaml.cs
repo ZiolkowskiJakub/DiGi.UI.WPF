@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace DiGi.UI.WPF.Core.Controls
 {
     /// <summary>
@@ -65,7 +64,7 @@ namespace DiGi.UI.WPF.Core.Controls
 
         private void SetVisibility()
         {
-            if(IsIndeterminate || Value == 0)
+            if (IsIndeterminate || Value == 0)
             {
                 StackPanel_Main.Visibility = Visibility.Hidden;
                 return;

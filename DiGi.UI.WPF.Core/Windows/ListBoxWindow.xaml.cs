@@ -24,10 +24,8 @@ namespace DiGi.UI.WPF.Core.Windows
             ListBoxControl_Main.ItemAdding += ListBoxControl_Main_ItemAdding;
         }
 
-        
         public event ListBoxItemAddingEventHandler? ItemAdding;
 
-        
         public event SelectionChangedEventHandler? SelectionChanged;
 
         public SelectionMode SelectionMode
@@ -67,7 +65,7 @@ namespace DiGi.UI.WPF.Core.Windows
         {
             ItemAdding?.Invoke(this, e);
         }
-        
+
         private void ListBoxControl_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectionChanged?.Invoke(this, e);

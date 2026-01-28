@@ -20,7 +20,7 @@ namespace DiGi.UI.WPF.Core.Controls
         public event ListBoxItemAddingEventHandler? ItemAdding;
 
         public event SelectionChangedEventHandler? SelectionChanged;
-        
+
         public SelectionMode SelectionMode
         {
             get
@@ -44,7 +44,7 @@ namespace DiGi.UI.WPF.Core.Controls
         {
             return Query.TagItems<T, ListBoxItem>(ListBox_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
-        
+
         public void SetItems<T>(IEnumerable<T> values)
         {
             ListBox_Main.Items.Clear();
@@ -56,11 +56,11 @@ namespace DiGi.UI.WPF.Core.Controls
 
             foreach (T value in values)
             {
-                ListBoxItemAddingEventArgs itemAddingEventArgs = new (value);
+                ListBoxItemAddingEventArgs itemAddingEventArgs = new(value);
                 ItemAdding?.Invoke(this, itemAddingEventArgs);
 
                 string? text = value?.ToString();
-                if(itemAddingEventArgs.Handled)
+                if (itemAddingEventArgs.Handled)
                 {
                     text = itemAddingEventArgs.Name;
                 }
@@ -112,7 +112,7 @@ namespace DiGi.UI.WPF.Core.Controls
                 ListBox_Main.SelectedItems.Clear();
             }
         }
-        
+
         private void SetEnabled()
         {
             Button_SelectAll.IsEnabled = ListBox_Main.SelectionMode != SelectionMode.Single;

@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Core.Classes
-{    public class DeterminateControlWorker : ProgressBarControlWorker, IDeterminateWorker
+{
+    public class DeterminateControlWorker : ProgressBarControlWorker, IDeterminateWorker
     {
         public DeterminateControlWorker(ProgressBarControl progressBarControl)
             : base(progressBarControl)

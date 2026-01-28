@@ -28,6 +28,7 @@ namespace DiGi.UI.WPF.Core.Windows
             Title = title;
             Text = text;
         }
+
         public string? Text
         {
             get

@@ -62,9 +62,9 @@ namespace DiGi.UI.WPF.Core.Controls
                 TreeViewItemAddingEventArgs treeViewItemAddingEventArgs = new(value);
                 ItemAdding?.Invoke(this, treeViewItemAddingEventArgs);
 
-                ItemPath? path = new ("Items");
+                ItemPath? path = new("Items");
                 string? name = value?.ToString();
-                if(value is ItemPath path_Temp)
+                if (value is ItemPath path_Temp)
                 {
                     path = path_Temp;
                     name = null;
@@ -77,7 +77,7 @@ namespace DiGi.UI.WPF.Core.Controls
                 }
 
                 ItemPathTreeViewItem? itemPathTreeViewItem = Modify.Update(TreeView_Main.Items, path, createFunc);
-                if(itemPathTreeViewItem != null)
+                if (itemPathTreeViewItem != null)
                 {
                     itemPathTreeViewItem.Tag = value;
                 }

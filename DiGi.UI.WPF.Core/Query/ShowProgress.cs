@@ -8,7 +8,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static void ShowProgress(this Action action, System.Windows.Window? owner = null, string? text = null)
         {
-            if(action == null)
+            if (action == null)
             {
                 return;
             }

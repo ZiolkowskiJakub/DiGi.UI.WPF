@@ -57,7 +57,6 @@ namespace DiGi.UI.WPF.Application.Windows
 
             //result = listBoxWindow.ShowDialog();
 
-
             //if (result != null && result.Value)
             //{
             //    selectedValues = listBoxWindow.GetItems<string>(true);
@@ -116,7 +115,6 @@ namespace DiGi.UI.WPF.Application.Windows
             Dispatcher.Invoke(() =>
             {
                 Button_Start.IsEnabled = false;
-
             });
 
             CancellableIndeterminateWindowWorker? cancellableIndeterminateWindowWorker = sender as CancellableIndeterminateWindowWorker;
@@ -157,7 +155,6 @@ namespace DiGi.UI.WPF.Application.Windows
                 Dispatcher.Invoke(() =>
                 {
                     Button_Start.IsEnabled = false;
-
                 });
 
                 for (int i = 1; i <= maximum; i++)
@@ -176,7 +173,7 @@ namespace DiGi.UI.WPF.Application.Windows
                 });
             }, "Calculating...");
         }
-        
+
         private void IndeterminateWorkerTest()
         {
             Query.ShowProgress(worker =>
@@ -184,7 +181,6 @@ namespace DiGi.UI.WPF.Application.Windows
                 Dispatcher.Invoke(() =>
                 {
                     Button_Start.IsEnabled = false;
-
                 });
 
                 //determinateWorker.Maximum = maximum;
@@ -204,10 +200,10 @@ namespace DiGi.UI.WPF.Application.Windows
                 });
             }, ProgressBarControl_Main, "Calculating...");
         }
-        
+
         private void TreeViewControl_Main_ItemAdding(object sender, TreeViewItemAddingEventArgs e)
         {
-            if(e.Item is not string text)
+            if (e.Item is not string text)
             {
                 return;
             }

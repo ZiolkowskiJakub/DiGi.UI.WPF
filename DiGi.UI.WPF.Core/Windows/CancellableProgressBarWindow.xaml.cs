@@ -2,7 +2,6 @@
 using DiGi.UI.WPF.Core.Interfaces;
 using System.Windows;
 
-
 namespace DiGi.UI.WPF.Core.Windows
 {
     /// <summary>
@@ -18,7 +17,7 @@ namespace DiGi.UI.WPF.Core.Windows
         }
 
         public event CancellingEventHandler? Cancelling;
-        
+
         public bool CancellationPending
         {
             get

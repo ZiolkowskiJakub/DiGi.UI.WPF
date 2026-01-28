@@ -5,7 +5,6 @@
         public ListBoxItemAddingEventArgs(object? item)
             : base(item)
         {
-
         }
     }
 }

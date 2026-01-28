@@ -9,7 +9,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public IndeterminateWindowWorker()
             : this(null)
         {
-
         }
 
         public IndeterminateWindowWorker(System.Windows.Window? owner)

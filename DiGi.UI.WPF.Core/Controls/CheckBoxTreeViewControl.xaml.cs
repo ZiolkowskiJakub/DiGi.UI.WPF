@@ -17,7 +17,7 @@ namespace DiGi.UI.WPF.Core.Controls
         }
 
         public event CheckBoxTreeViewItemAddingEventHandler? ItemAdding;
-        
+
         public void CollapseAll()
         {
             Modify.CollapseAll(TreeView_Main.Items);
@@ -40,7 +40,6 @@ namespace DiGi.UI.WPF.Core.Controls
                 return checkBox.IsChecked != null && checkBox.IsChecked.Value;
             });
 
-
             return Query.TagItems<T, TreeViewItem>(TreeView_Main.Items, true, selected, selectedFunc);
         }
 
@@ -60,7 +59,7 @@ namespace DiGi.UI.WPF.Core.Controls
                     return null;
                 }
 
-                CheckBox checkBox = new () { Content = itemPath.GetNames().Last() };
+                CheckBox checkBox = new() { Content = itemPath.GetNames().Last() };
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
@@ -95,7 +94,7 @@ namespace DiGi.UI.WPF.Core.Controls
                     continue;
                 }
 
-                CheckBox checkBox = new () { Content = name };
+                CheckBox checkBox = new() { Content = name };
                 checkBox.Unchecked += CheckBox_Updated;
                 checkBox.Checked += CheckBox_Updated;
 
@@ -105,12 +104,10 @@ namespace DiGi.UI.WPF.Core.Controls
 
         private void Button_SelectAll_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Button_SelectNone_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void CheckBox_Updated(object sender, RoutedEventArgs e)

@@ -1,7 +1,6 @@
 ﻿using DiGi.UI.WPF.Core.Delegates;
 using System.Windows;
 
-
 namespace DiGi.UI.WPF.Core.Windows
 {
     /// <summary>
@@ -21,11 +20,10 @@ namespace DiGi.UI.WPF.Core.Windows
         public TreeViewWindow()
             : this(null)
         {
-
         }
 
         public event TreeViewItemAddingEventHandler? ItemAdding;
-        
+
         public void CollapseAll()
         {
             TreeViewControl_Main.CollapseAll();

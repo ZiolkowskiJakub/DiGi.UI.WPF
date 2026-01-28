@@ -9,7 +9,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public CancellableProgressBarWindowWorker()
             : this(null)
         {
-
         }
 
         public CancellableProgressBarWindowWorker(System.Windows.Window? owner)
@@ -66,4 +65,3 @@ namespace DiGi.UI.WPF.Core.Classes
         }
     }
 }
-

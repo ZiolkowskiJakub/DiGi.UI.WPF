@@ -7,7 +7,6 @@
         public CheckBoxTreeViewItemAddingEventArgs(object? item)
             : base(item)
         {
-
         }
 
         public bool? IsChecked

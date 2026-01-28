@@ -3,9 +3,9 @@
     public abstract class ItemAddingEventArgs : EventArgs
     {
         protected bool handled = false;
-       
+
         private string? name = null;
-        
+
         public ItemAddingEventArgs(object? item)
         {
             Item = item;
@@ -17,11 +17,10 @@
             {
                 return handled;
             }
-
         }
 
         public object? Item { get; }
-        
+
         public string? Name
         {
             get

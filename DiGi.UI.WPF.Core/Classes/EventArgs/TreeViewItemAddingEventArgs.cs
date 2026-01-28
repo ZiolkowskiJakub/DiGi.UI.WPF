@@ -9,7 +9,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public TreeViewItemAddingEventArgs(object? item)
             : base(item)
         {
-
         }
 
         public ItemPath? Path

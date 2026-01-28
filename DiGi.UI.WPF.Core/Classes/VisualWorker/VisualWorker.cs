@@ -2,7 +2,7 @@
 using System.ComponentModel;
 
 namespace DiGi.UI.WPF.Core.Classes
-{    
+{
     public abstract class VisualWorker : IVisualWorker
     {
         protected BackgroundWorker backgroundWorker = new() { WorkerReportsProgress = false };
@@ -24,7 +24,7 @@ namespace DiGi.UI.WPF.Core.Classes
                 return backgroundWorker == null ? false : backgroundWorker.IsBusy;
             }
         }
-        
+
         public virtual void Run()
         {
             backgroundWorker.RunWorkerAsync();

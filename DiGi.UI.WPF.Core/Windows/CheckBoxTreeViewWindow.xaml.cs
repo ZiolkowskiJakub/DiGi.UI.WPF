@@ -20,11 +20,10 @@ namespace DiGi.UI.WPF.Core.Windows
         public CheckBoxTreeViewWindow()
             : this(null)
         {
-
         }
 
         public event CheckBoxTreeViewItemAddingEventHandler? ItemAdding;
-        
+
         public void CollapseAll()
         {
             CheckBoxTreeViewControl_Main.CollapseAll();

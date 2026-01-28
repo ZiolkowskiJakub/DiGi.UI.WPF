@@ -37,4 +37,3 @@ namespace DiGi.UI.WPF.Core.Classes
         }
     }
 }
-

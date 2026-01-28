@@ -8,7 +8,6 @@ namespace DiGi.UI.WPF.Core.Classes
         public ProgressBarWindowWorker()
             : this(null)
         {
-
         }
 
         public ProgressBarWindowWorker(System.Windows.Window? owner)
@@ -30,7 +29,7 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             get
             {
-                if(window is null)
+                if (window is null)
                 {
                     return null;
                 }
@@ -40,7 +39,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
             set
             {
-                if(window is null)
+                if (window is null)
                 {
                     return;
                 }

@@ -6,7 +6,7 @@ namespace DiGi.UI.WPF.Core
     {
         public static T? Parent<T>(System.Windows.DependencyObject? dependencyObject) where T : ItemsControl
         {
-            if(dependencyObject is null)
+            if (dependencyObject is null)
             {
                 return null;
             }
