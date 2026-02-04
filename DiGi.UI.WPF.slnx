@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="DiGi.UI.WPF.Application/DiGi.UI.WPF.Application.csproj" />
+  <Project Path="DiGi.UI.WPF.Core/DiGi.UI.WPF.Core.csproj" />
+</Solution>
