@@ -1,12 +1,12 @@
 ﻿using DiGi.Core.Classes;
-using DiGi.Core.Interfaces;
+using DiGi.UI.WPF.Core.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace DiGi.UI.WPF.Core.Classes
 {
-    public class VisualCancelableTask<TCancelableTask> : INotifyPropertyChanged, INamedObject, IDescribableObject where TCancelableTask : CancelableTask
+    public class VisualCancelableTask<TCancelableTask> : IVisualCancelableTask where TCancelableTask : CancelableTask
     {
         private readonly TCancelableTask cancelableTask;
         private readonly string name;
@@ -34,9 +34,9 @@ namespace DiGi.UI.WPF.Core.Classes
 
         public string? Name
         {
-            get 
-            { 
-                return name; 
+            get
+            {
+                return name;
             }
         }
 
@@ -56,7 +56,7 @@ namespace DiGi.UI.WPF.Core.Classes
             }
         }
 
-        public string Status
+        public virtual string Status
         {
             get
             {
@@ -80,7 +80,7 @@ namespace DiGi.UI.WPF.Core.Classes
 
         private void RefreshAll()
         {
-            Action action = new (() => 
+            Action action = new(() =>
             {
                 OnPropertyChanged(nameof(CancelableTaskStatus));
                 OnPropertyChanged(nameof(Name));
@@ -102,14 +102,13 @@ namespace DiGi.UI.WPF.Core.Classes
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public class VisualCancelableTask : VisualCancelableTask<CancelableTask>
     {
-        public VisualCancelableTask(CancelableTask cancelableTask, string name, string description) 
+        public VisualCancelableTask(CancelableTask cancelableTask, string name, string description)
             : base(cancelableTask, name, description)
         {
         }

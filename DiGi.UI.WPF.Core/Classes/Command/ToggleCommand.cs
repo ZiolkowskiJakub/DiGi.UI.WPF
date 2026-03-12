@@ -5,7 +5,7 @@ namespace DiGi.UI.WPF.Core.Classes
     public class ToggleCommand : ICommand
     {
         private readonly Action<object?> execute;
-        
+
         public ToggleCommand(Action<object?> execute)
         {
             this.execute = execute;
