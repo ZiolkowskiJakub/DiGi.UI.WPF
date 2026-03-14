@@ -1,4 +1,4 @@
-﻿using DiGi.Core.Classes;
+﻿using DiGi.Core.Interfaces;
 using DiGi.UI.WPF.Core.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -6,29 +6,29 @@ using System.Windows.Input;
 
 namespace DiGi.UI.WPF.Core.Classes
 {
-    public class VisualCancelableTask<TCancelableTask> : IVisualCancelableTask where TCancelableTask : CancelableTask
+    public class VisualBackgroundTask<TBackgroundTask> : IVisualBackgroundTask where TBackgroundTask : IBackgroundTask
     {
-        private readonly TCancelableTask cancelableTask;
+        protected readonly TBackgroundTask backgroundTask;
         private readonly string name;
         private readonly string description;
 
-        public VisualCancelableTask(TCancelableTask cancelableTask, string name, string description)
+        public VisualBackgroundTask(TBackgroundTask backgroundTask, string name, string description)
         {
-            this.cancelableTask = cancelableTask;
+            this.backgroundTask = backgroundTask;
             this.name = name;
             this.description = description;
 
-            cancelableTask.Started += (s, e) => RefreshAll();
-            cancelableTask.Stopped += (s, e) => RefreshAll();
-            cancelableTask.Starting += (s, e) => RefreshAll();
-            cancelableTask.Stopping += (s, e) => RefreshAll();
+            backgroundTask.Started += (s, e) => RefreshAll();
+            backgroundTask.Stopped += (s, e) => RefreshAll();
+            backgroundTask.Starting += (s, e) => RefreshAll();
+            backgroundTask.Stopping += (s, e) => RefreshAll();
         }
 
-        public DiGi.Core.Enums.CancelableTaskStatus CancelableTaskStatus
+        public DiGi.Core.Enums.BackgroundTaskStatus BackgroundTaskStatus
         {
             get
             {
-                return cancelableTask.CancelableTaskStatus;
+                return backgroundTask.BackgroundTaskStatus;
             }
         }
 
@@ -52,7 +52,7 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             get
             {
-                return cancelableTask.IsRunning ? "Stop" : "Start";
+                return backgroundTask.IsRunning ? "Stop" : "Start";
             }
         }
 
@@ -60,19 +60,22 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             get
             {
-                return CancelableTaskStatus.ToString();
+                return BackgroundTaskStatus.ToString();
             }
         }
 
         public ICommand ToggleCommandAsync => new ToggleCommandAsync(async _ =>
         {
-            if (cancelableTask.IsRunning)
+            if (backgroundTask.IsRunning)
             {
-                await cancelableTask.StopAsync();
+                if (backgroundTask is ICancelableBackgroundTask cancelableBackgroundTask)
+                {
+                    await cancelableBackgroundTask.StopAsync();
+                }
             }
             else
             {
-                cancelableTask.Start();
+                backgroundTask.Start();
             }
 
             RefreshAll();
@@ -82,7 +85,7 @@ namespace DiGi.UI.WPF.Core.Classes
         {
             Action action = new(() =>
             {
-                OnPropertyChanged(nameof(CancelableTaskStatus));
+                OnPropertyChanged(nameof(BackgroundTaskStatus));
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Description));
                 OnPropertyChanged(nameof(ToggleText));
@@ -106,10 +109,10 @@ namespace DiGi.UI.WPF.Core.Classes
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public class VisualCancelableTask : VisualCancelableTask<CancelableTask>
+    public class VisualBackgroundTask : VisualBackgroundTask<IBackgroundTask>
     {
-        public VisualCancelableTask(CancelableTask cancelableTask, string name, string description)
-            : base(cancelableTask, name, description)
+        public VisualBackgroundTask(IBackgroundTask backgroundTask, string name, string description)
+            : base(backgroundTask, name, description)
         {
         }
     }
