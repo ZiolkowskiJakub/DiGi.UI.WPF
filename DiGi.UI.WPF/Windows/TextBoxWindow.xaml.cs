@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DiGi.UI.WPF.Core.Windows
+namespace DiGi.UI.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for TextBoxWindow.xaml

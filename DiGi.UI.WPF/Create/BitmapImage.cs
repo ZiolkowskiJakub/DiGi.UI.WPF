@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Create
     {

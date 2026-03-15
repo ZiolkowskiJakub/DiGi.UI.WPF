@@ -1,8 +1,8 @@
 ﻿using DiGi.Core.Interfaces;
-using DiGi.UI.WPF.Core.Classes;
-using DiGi.UI.WPF.Core.Controls;
+using DiGi.UI.WPF.Classes;
+using DiGi.UI.WPF.Controls;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Query
     {

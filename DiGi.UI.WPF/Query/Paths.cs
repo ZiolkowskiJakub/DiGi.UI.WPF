@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Query
     {

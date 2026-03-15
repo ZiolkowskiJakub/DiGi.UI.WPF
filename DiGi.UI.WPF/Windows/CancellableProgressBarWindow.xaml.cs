@@ -1,8 +1,8 @@
-﻿using DiGi.UI.WPF.Core.Delegates;
-using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Delegates;
+using DiGi.UI.WPF.Interfaces;
 using System.Windows;
 
-namespace DiGi.UI.WPF.Core.Windows
+namespace DiGi.UI.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for CancellableProgressBarWindow.xaml

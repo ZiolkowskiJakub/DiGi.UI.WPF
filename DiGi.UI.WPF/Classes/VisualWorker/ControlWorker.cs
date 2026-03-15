@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public abstract class ControlWorker<TControl> : VisualWorker where TControl : Control
     {

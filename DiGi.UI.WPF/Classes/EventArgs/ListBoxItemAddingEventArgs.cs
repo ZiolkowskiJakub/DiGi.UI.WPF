@@ -1,4 +1,4 @@
-﻿namespace DiGi.UI.WPF.Core.Classes
+﻿namespace DiGi.UI.WPF.Classes
 {
     public class ListBoxItemAddingEventArgs : ItemAddingEventArgs
     {

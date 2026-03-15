@@ -1,7 +1,7 @@
 ﻿using DiGi.Core.Enums;
 using DiGi.Core.Interfaces;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public class VisualReportableBackgroundTask<T, TReportableBackgroundTask> : VisualBackgroundTask<TReportableBackgroundTask> where TReportableBackgroundTask : IReportableBackgroundTask<T>
     {

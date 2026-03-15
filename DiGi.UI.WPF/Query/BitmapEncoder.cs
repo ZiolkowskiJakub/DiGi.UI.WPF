@@ -1,7 +1,7 @@
 ﻿using DiGi.Core.IO.Classes;
 using System.Windows.Media.Imaging;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Query
     {

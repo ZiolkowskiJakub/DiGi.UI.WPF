@@ -1,4 +1,4 @@
-﻿namespace DiGi.UI.WPF.Core.Constants
+﻿namespace DiGi.UI.WPF.Constants
 {
     public static class FileExtension
     {

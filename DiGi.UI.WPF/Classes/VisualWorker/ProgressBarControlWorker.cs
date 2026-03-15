@@ -1,7 +1,7 @@
-﻿using DiGi.UI.WPF.Core.Controls;
+﻿using DiGi.UI.WPF.Controls;
 using System.ComponentModel;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public abstract class ProgressBarControlWorker : ControlWorker<ProgressBarControl>
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Modify
     {

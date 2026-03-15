@@ -1,10 +1,10 @@
 ﻿using DiGi.Core.Interfaces;
-using DiGi.UI.WPF.Core.Interfaces;
+using DiGi.UI.WPF.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public class VisualBackgroundTask<TBackgroundTask> : IVisualBackgroundTask where TBackgroundTask : IBackgroundTask
     {

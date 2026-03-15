@@ -1,7 +1,7 @@
-﻿using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Interfaces;
 using System.ComponentModel;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public abstract class VisualWorker : IVisualWorker
     {

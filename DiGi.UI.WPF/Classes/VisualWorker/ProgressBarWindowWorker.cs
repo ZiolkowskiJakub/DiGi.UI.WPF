@@ -1,7 +1,7 @@
-﻿using DiGi.UI.WPF.Core.Windows;
+﻿using DiGi.UI.WPF.Windows;
 using System.Windows.Threading;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public class ProgressBarWindowWorker : WindowWorker<ProgressBarWindow>
     {

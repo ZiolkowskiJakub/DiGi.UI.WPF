@@ -1,9 +1,9 @@
 ﻿using DiGi.Core.Interfaces;
-using DiGi.UI.WPF.Core.Controls;
+using DiGi.UI.WPF.Controls;
 using System.ComponentModel;
 using System.Windows.Threading;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public class IndeterminateControlWorker : ProgressBarControlWorker, IIndeterminateWorker
     {

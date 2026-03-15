@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public class ItemPath : DiGi.Core.Classes.ObjectPath<ItemPath>
     {

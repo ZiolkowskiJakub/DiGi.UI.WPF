@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DiGi.UI.WPF.Core.Windows"
-        xmlns:Controls="clr-namespace:DiGi.UI.WPF.Core.Controls" x:Class="DiGi.UI.WPF.Core.Windows.TextBoxWindow"
+        xmlns:local="clr-namespace:DiGi.UI.WPF.Windows"
+        xmlns:Controls="clr-namespace:DiGi.UI.WPF.Controls" x:Class="DiGi.UI.WPF.Windows.TextBoxWindow"
         mc:Ignorable="d"
         Title="" Height="130" Width="250" ResizeMode="NoResize" WindowStyle="SingleBorderWindow">
     <Grid>

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DiGi.UI.WPF.Core.Controls
+namespace DiGi.UI.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for TextBoxControl.xaml

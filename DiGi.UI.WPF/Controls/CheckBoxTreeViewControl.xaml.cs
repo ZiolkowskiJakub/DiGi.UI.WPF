@@ -1,9 +1,9 @@
-﻿using DiGi.UI.WPF.Core.Classes;
-using DiGi.UI.WPF.Core.Delegates;
+﻿using DiGi.UI.WPF.Classes;
+using DiGi.UI.WPF.Delegates;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DiGi.UI.WPF.Core.Controls
+namespace DiGi.UI.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for CheckBoxTreeViewControl.xaml

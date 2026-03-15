@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Threading;
 
-namespace DiGi.UI.WPF.Core.Classes
+namespace DiGi.UI.WPF.Classes
 {
     public abstract class WindowWorker<TWindow> : VisualWorker where TWindow : System.Windows.Window
     {

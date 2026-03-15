@@ -1,8 +1,8 @@
-﻿using DiGi.UI.WPF.Core.Interfaces;
+﻿using DiGi.UI.WPF.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DiGi.UI.WPF.Core.Controls
+namespace DiGi.UI.WPF.Controls
 {
     /// <summary>
     /// Interaction logic for ProgressBarControl.xaml

@@ -1,6 +1,6 @@
 ﻿using DiGi.Core.IO.Classes;
 
-namespace DiGi.UI.WPF.Core
+namespace DiGi.UI.WPF
 {
     public static partial class Query
     {
