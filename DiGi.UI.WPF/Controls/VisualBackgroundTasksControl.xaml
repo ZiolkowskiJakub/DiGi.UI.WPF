@@ -8,7 +8,12 @@
              x:Name="Root"
              d:DesignHeight="400" d:DesignWidth="500">
     <Grid Background="#FFE5E5E5">
-        <DataGrid ItemsSource="{Binding VisualBackgroundTasks, ElementName=Root}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Single" HeadersVisibility="Column">
+        <DataGrid ItemsSource="{Binding VisualBackgroundTasks, ElementName=Root}" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False" 
+                  SelectionUnit="FullRow" 
+                  SelectionMode="Single" 
+                  HeadersVisibility="Column">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
@@ -22,6 +27,7 @@
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -32,6 +38,15 @@
                             <Setter Property="FontWeight" Value="Bold" />
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="ToolTip" Value="{Binding ExceptionText}" />
+                            <Style.Triggers>
+                                <Trigger Property="ToolTip" Value="{x:Null}">
+                                    <Setter Property="ToolTipService.IsEnabled" Value="False" />
+                                </Trigger>
+                                <Trigger Property="ToolTip" Value="">
+                                    <Setter Property="ToolTipService.IsEnabled" Value="False" />
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -39,7 +54,12 @@
                 <DataGridTemplateColumn Header="Action" Width="80">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding ToggleText}" Command="{Binding ToggleCommandAsync}" Margin="2" HorizontalAlignment="Center" MinWidth="80" />
+                            <Button Content="{Binding ToggleText}" 
+                                    Command="{Binding ToggleCommandAsync}"
+                                    IsEnabled="{Binding CanToggle}"
+                                    Margin="2" 
+                                    HorizontalAlignment="Center" 
+                                    MinWidth="80" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

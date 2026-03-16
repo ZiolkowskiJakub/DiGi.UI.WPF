@@ -56,6 +56,29 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        public bool CanToggle
+        {
+            get
+            {
+                // If the task is not running, we can always start it.
+                if (!backgroundTask.IsRunning)
+                {
+                    return true;
+                }
+
+                // If the task is running, we can only "Stop" it if it supports cancellation.
+                return backgroundTask is ICancelableBackgroundTask;
+            }
+        }
+
+        public string? ExceptionText
+        {
+            get
+            {
+                return backgroundTask.Exception?.Message;
+            }
+        }
+
         public virtual string Status
         {
             get
@@ -90,6 +113,8 @@ namespace DiGi.UI.WPF.Classes
                 OnPropertyChanged(nameof(Description));
                 OnPropertyChanged(nameof(ToggleText));
                 OnPropertyChanged(nameof(Status));
+                OnPropertyChanged(nameof(ExceptionText));
+                OnPropertyChanged(nameof(CanToggle));
             });
 
             // Sprawdzamy, czy jesteśmy w wątku UI (Windows 11 / WPF Threading Model)
