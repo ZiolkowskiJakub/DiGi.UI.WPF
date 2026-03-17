@@ -51,13 +51,13 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTemplateColumn Header="Action" Width="80">
+                <DataGridTemplateColumn Header="Action" Width="90">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{Binding ToggleText}" 
                                     Command="{Binding ToggleCommandAsync}"
                                     IsEnabled="{Binding CanToggle}"
-                                    Margin="2" 
+                                    Margin="2,2,2,2" 
                                     HorizontalAlignment="Center" 
                                     MinWidth="80" />
                         </DataTemplate>
