@@ -1,4 +1,5 @@
-﻿using DiGi.Core.Interfaces;
+﻿using DiGi.Core;
+using DiGi.Core.Interfaces;
 using DiGi.UI.WPF.Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -9,8 +10,10 @@ namespace DiGi.UI.WPF.Classes
     public class VisualBackgroundTask<TBackgroundTask> : IVisualBackgroundTask where TBackgroundTask : IBackgroundTask
     {
         protected readonly TBackgroundTask backgroundTask;
-        private readonly string name;
         private readonly string description;
+        private readonly string name;
+        
+        private readonly System.Timers.Timer timer = new (1000);
 
         public VisualBackgroundTask(TBackgroundTask backgroundTask, string name, string description)
         {
@@ -18,43 +21,26 @@ namespace DiGi.UI.WPF.Classes
             this.name = name;
             this.description = description;
 
-            backgroundTask.Started += (s, e) => RefreshAll();
-            backgroundTask.Stopped += (s, e) => RefreshAll();
+            // Initialize timer for live duration updates
+            timer.Elapsed += (s, e) => OnPropertyChanged(nameof(ExecutionTimeSpanText));
+
+            backgroundTask.Started += (s, e) =>
+            {
+                timer.Start();
+                RefreshAll();
+            };
+
+            backgroundTask.Stopped += (s, e) =>
+            {
+                timer.Stop();
+                RefreshAll();
+            };
+
             backgroundTask.Starting += (s, e) => RefreshAll();
             backgroundTask.Stopping += (s, e) => RefreshAll();
         }
 
-        public DiGi.Core.Enums.BackgroundTaskStatus BackgroundTaskStatus
-        {
-            get
-            {
-                return backgroundTask.BackgroundTaskStatus;
-            }
-        }
-
-        public string? Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        public string? Description
-        {
-            get
-            {
-                return description;
-            }
-        }
-
-        public string ToggleText
-        {
-            get
-            {
-                return backgroundTask.IsRunning ? "Stop" : "Start";
-            }
-        }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public bool CanToggle
         {
@@ -71,6 +57,14 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        public string? Description
+        {
+            get
+            {
+                return description;
+            }
+        }
+
         public string? ExceptionText
         {
             get
@@ -79,11 +73,30 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        public string ExecutionTimeSpanText
+        {
+            get
+            {
+                TimeSpan duration = backgroundTask.ExecutionTimeSpan;
+
+                // Format: HH:mm:ss
+                return string.Format("{0:D2}:{1:D2}:{2:D2}", (int)duration.TotalHours, duration.Minutes, duration.Seconds);
+            }
+        }
+
+        public string? Name
+        {
+            get
+            {
+                return name;
+            }
+        }
+        
         public virtual string Status
         {
             get
             {
-                return BackgroundTaskStatus.ToString();
+                return (backgroundTask is ICancelableBackgroundTask cancelableBackgroundTask ? cancelableBackgroundTask.CancelableBackgroundTaskStatus.Description() : backgroundTask.BackgroundTaskStatus.Description()) ?? "???";
             }
         }
 
@@ -104,14 +117,24 @@ namespace DiGi.UI.WPF.Classes
             RefreshAll();
         });
 
+        public string ToggleText
+        {
+            get
+            {
+                return backgroundTask.IsRunning ? "Stop" : "Start";
+            }
+        }
+        
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         private void RefreshAll()
         {
             Action action = new(() =>
             {
-                OnPropertyChanged(nameof(BackgroundTaskStatus));
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Description));
                 OnPropertyChanged(nameof(ToggleText));
+                OnPropertyChanged(nameof(ExecutionTimeSpanText));
                 OnPropertyChanged(nameof(Status));
                 OnPropertyChanged(nameof(ExceptionText));
                 OnPropertyChanged(nameof(CanToggle));
@@ -128,10 +151,6 @@ namespace DiGi.UI.WPF.Classes
                 System.Windows.Application.Current.Dispatcher.BeginInvoke(action);
             }
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public class VisualBackgroundTask : VisualBackgroundTask<IBackgroundTask>
