@@ -32,7 +32,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="150" IsReadOnly="True">
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="130" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontWeight" Value="Bold" />
@@ -51,7 +51,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Duration" Binding="{Binding ExecutionTimeSpanText}" Width="100" IsReadOnly="True">
+                <DataGridTextColumn Header="Duration" Binding="{Binding ExecutionTimeSpanText}" Width="75" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -60,7 +60,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTemplateColumn Header="Action" Width="90">
+                <DataGridTemplateColumn Header="Action" Width="75">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{Binding ToggleText}" 
@@ -68,7 +68,7 @@
                                     IsEnabled="{Binding CanToggle}"
                                     Margin="2,2,2,2" 
                                     HorizontalAlignment="Center" 
-                                    MinWidth="80" />
+                                    MinWidth="65" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
