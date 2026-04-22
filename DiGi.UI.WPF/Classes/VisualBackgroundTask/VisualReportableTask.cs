@@ -14,6 +14,11 @@ namespace DiGi.UI.WPF.Classes
             {
                 Value = value;
             };
+
+            reportableBackgroundTask.Stopped += (s, value) =>
+            {
+                Value = default;
+            };
         }
 
         public T? Value

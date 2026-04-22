@@ -117,6 +117,17 @@ namespace DiGi.UI.WPF.Classes
             RefreshAll();
         });
 
+        public void Start()
+        {
+            if (backgroundTask.IsRunning)
+            {
+                return;
+            }
+
+            backgroundTask.Start();
+            RefreshAll();
+        }
+
         public string ToggleText
         {
             get
@@ -149,6 +160,14 @@ namespace DiGi.UI.WPF.Classes
             {
                 // Jeśli nie, przesyłamy wykonanie do wątku UI
                 System.Windows.Application.Current.Dispatcher.BeginInvoke(action);
+            }
+        }
+
+        public string? TypeName
+        {
+            get
+            {
+                return backgroundTask?.GetType()?.Name;
             }
         }
     }

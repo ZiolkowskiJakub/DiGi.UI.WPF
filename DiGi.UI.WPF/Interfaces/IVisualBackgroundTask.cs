@@ -5,5 +5,8 @@ namespace DiGi.UI.WPF.Interfaces
 {
     public interface IVisualBackgroundTask : IWPFObject, INotifyPropertyChanged, INamedObject, IDescribableObject
     {
+        string? TypeName { get; }
+
+        void Start();
     }
 }
