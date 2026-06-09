@@ -10,24 +10,42 @@ namespace DiGi.UI.WPF.Controls
     /// </summary>
     public partial class CheckBoxTreeViewControl : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CheckBoxTreeViewControl"/> class.
+        /// </summary>
         public CheckBoxTreeViewControl()
             : base()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Occurs when an item is being added to the tree view, allowing for customization of the item's path and name.
+        /// </summary>
         public event CheckBoxTreeViewItemAddingEventHandler? ItemAdding;
 
+        /// <summary>
+        /// Collapses all nodes within the tree view.
+        /// </summary>
         public void CollapseAll()
         {
             Modify.CollapseAll(TreeView_Main.Items);
         }
 
+        /// <summary>
+        /// Expands all nodes within the tree view.
+        /// </summary>
         public void ExpandaAll()
         {
             Modify.ExpandAll(TreeView_Main.Items);
         }
 
+        /// <summary>
+        /// Retrieves a list of items of type <typeparamref name="T"/> from the tree view, optionally filtered by their selection state.
+        /// </summary>
+        /// <typeparam name="T">The type of items to retrieve.</typeparam>
+        /// <param name="selected">A boolean indicating whether only selected items should be returned. Defaults to <c>true</c>.</param>
+        /// <returns>A list of items of type <typeparamref name="T"/>, or <c>null</c> if no matching items are found.</returns>
         public List<T>? GetItems<T>(bool selected = true)
         {
             Func<TreeViewItem, bool> selectedFunc = new((treeViewItem) =>
@@ -43,6 +61,11 @@ namespace DiGi.UI.WPF.Controls
             return Query.TagItems<T, TreeViewItem>(TreeView_Main.Items, true, selected, selectedFunc);
         }
 
+        /// <summary>
+        /// Populates the tree view with a collection of items.
+        /// </summary>
+        /// <typeparam name="T">The type of values to be added to the tree view.</typeparam>
+        /// <param name="values">An enumerable collection of values to populate the control.</param>
         public void SetItems<T>(IEnumerable<T> values)
         {
             TreeView_Main.Items.Clear();

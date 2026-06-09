@@ -1,4 +1,4 @@
-﻿using DiGi.UI.WPF.Classes;
+using DiGi.UI.WPF.Classes;
 using DiGi.UI.WPF.Delegates;
 using System.Windows.Controls;
 
@@ -9,35 +9,64 @@ namespace DiGi.UI.WPF.Controls
     /// </summary>
     public partial class TreeViewControl : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeViewControl"/> class.
+        /// </summary>
         public TreeViewControl()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Occurs when an item is being added to the tree view, allowing for modification of the item's path or name.
+        /// </summary>
         public event TreeViewItemAddingEventHandler? ItemAdding;
 
+        /// <summary>
+        /// Occurs when the selected item in the tree view changes.
+        /// </summary>
         public event System.Windows.RoutedPropertyChangedEventHandler<object>? SelectedItemChanged;
 
+        /// <summary>
+        /// Clears all items from the main TreeView control.
+        /// </summary>
         public void ClearItems()
         {
             TreeView_Main.Items.Clear();
         }
 
+        /// <summary>
+        /// Collapses all expandable nodes within the tree view.
+        /// </summary>
         public void CollapseAll()
         {
             Modify.CollapseAll(TreeView_Main.Items);
         }
 
+        /// <summary>
+        /// Expands all expandable nodes within the tree view.
+        /// </summary>
         public void ExpandaAll()
         {
             Modify.ExpandAll(TreeView_Main.Items);
         }
 
+        /// <summary>
+        /// Retrieves a list of items of the specified type from the tree view.
+        /// </summary>
+        /// <typeparam name="T">The type of items to retrieve.</typeparam>
+        /// <param name="selected">If set to <c>true</c>, only retrieves items that are currently selected; otherwise, retrieves all items of type <typeparamref name="T"/>.</param>
+        /// <returns>A list of items of type <typeparamref name="T"/>, or null if no matching items are found.</returns>
         public List<T>? GetItems<T>(bool selected = true)
         {
             return Query.TagItems<T, TreeViewItem>(TreeView_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
 
+        /// <summary>
+        /// Populates the tree view with a collection of values, organizing them by path and allowing custom item creation via the <see cref="ItemAdding"/> event.
+        /// </summary>
+        /// <typeparam name="T">The type of values to be added to the tree view.</typeparam>
+        /// <param name="values">The collection of values to set in the tree view.</param>
         public void SetItems<T>(IEnumerable<T> values)
         {
             TreeView_Main.Items.Clear();

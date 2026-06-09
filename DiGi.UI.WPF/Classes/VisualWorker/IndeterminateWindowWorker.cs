@@ -4,13 +4,23 @@ using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Classes
 {
+    /// <summary>
+    /// Provides a worker implementation that manages a window with indeterminate progress.
+    /// </summary>
     public class IndeterminateWindowWorker : ProgressBarWindowWorker, IIndeterminateWorker
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndeterminateWindowWorker"/> class without specifying an owner window.
+        /// </summary>
         public IndeterminateWindowWorker()
             : this(null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IndeterminateWindowWorker"/> class with a specified owner window.
+        /// </summary>
+        /// <param name="owner">The window that owns this worker.</param>
         public IndeterminateWindowWorker(System.Windows.Window? owner)
             : base(owner)
         {
@@ -25,6 +35,10 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Reports progress by updating the status text while maintaining an indeterminate state.
+        /// </summary>
+        /// <param name="text">The text to be displayed as the current progress status.</param>
         public void Report(string text)
         {
             backgroundWorker.ReportProgress(0, text);

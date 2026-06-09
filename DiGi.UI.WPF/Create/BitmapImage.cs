@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -8,6 +8,11 @@ namespace DiGi.UI.WPF
 {
     public static partial class Create
     {
+        /// <summary>
+        /// Converts a byte array into a <see cref="System.Windows.Media.Imaging.BitmapImage"/>.
+        /// </summary>
+        /// <param name="bytes">The byte array containing the image data.</param>
+        /// <returns>A <see cref="System.Windows.Media.Imaging.BitmapImage"/> created from the provided bytes, or null if the input is null.</returns>
         public static BitmapImage? BitmapImage(this byte[]? bytes)
         {
             if (bytes == null)
@@ -26,6 +31,11 @@ namespace DiGi.UI.WPF
             return result;
         }
 
+        /// <summary>
+        /// Converts a <see cref="Image"/> object into a <see cref="System.Windows.Media.Imaging.BitmapImage"/>.
+        /// </summary>
+        /// <param name="image">The source image to convert.</param>
+        /// <returns>A <see cref="System.Windows.Media.Imaging.BitmapImage"/> created from the provided image, or null if the input is null.</returns>
         public static BitmapImage? BitmapImage(Image? image)
         {
             if (image is null)
@@ -49,6 +59,13 @@ namespace DiGi.UI.WPF
             return result;
         }
 
+        /// <summary>
+        /// Creates a solid color <see cref="System.Windows.Media.Imaging.BitmapImage"/> with the specified dimensions.
+        /// </summary>
+        /// <param name="width">The width of the resulting image in pixels.</param>
+        /// <param name="height">The height of the resulting image in pixels.</param>
+        /// <param name="color">The <see cref="System.Drawing.Color"/> to fill the image with.</param>
+        /// <returns>A <see cref="System.Windows.Media.Imaging.BitmapImage"/> representing a solid color rectangle.</returns>
         public static BitmapImage BitmapImage(int width, int height, System.Drawing.Color color)
         {
             WriteableBitmap bitmap = new(width, height, 96, 96, PixelFormats.Bgra32, null);

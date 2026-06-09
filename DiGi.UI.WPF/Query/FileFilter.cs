@@ -4,6 +4,11 @@ namespace DiGi.UI.WPF
 {
     public static partial class Query
     {
+        /// <summary>
+        /// Determines the appropriate file filter based on the provided file path's extension.
+        /// </summary>
+        /// <param name="path">The path of the file to evaluate.</param>
+        /// <returns>A <see cref="FileFilter"/> instance if a matching filter is found; otherwise, null.</returns>
         public static FileFilter? FileFilter(string? path)
         {
             if (string.IsNullOrWhiteSpace(path))

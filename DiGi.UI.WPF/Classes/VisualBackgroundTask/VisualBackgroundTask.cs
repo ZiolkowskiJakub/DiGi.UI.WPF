@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace DiGi.UI.WPF.Classes
 {
+    /// <summary>
+    /// Provides a visual wrapper for a background task, enabling integration with WPF UI components and providing properties for monitoring execution status and time.
+    /// </summary>
+    /// <typeparam name="TBackgroundTask">The type of the background task, which must implement <see cref="IBackgroundTask"/>.</typeparam>
     public class VisualBackgroundTask<TBackgroundTask> : IVisualBackgroundTask where TBackgroundTask : IBackgroundTask
     {
         protected readonly TBackgroundTask backgroundTask;
@@ -15,6 +19,12 @@ namespace DiGi.UI.WPF.Classes
         
         private readonly System.Timers.Timer timer = new (1000);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualBackgroundTask{TBackgroundTask}"/> class.
+        /// </summary>
+        /// <param name="backgroundTask">The background task instance to be wrapped.</param>
+        /// <param name="name">The display name of the background task.</param>
+        /// <param name="description">A detailed description of the background task.</param>
         public VisualBackgroundTask(TBackgroundTask backgroundTask, string name, string description)
         {
             this.backgroundTask = backgroundTask;
@@ -40,8 +50,14 @@ namespace DiGi.UI.WPF.Classes
             backgroundTask.Stopping += (s, e) => RefreshAll();
         }
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Gets a value indicating whether the background task can currently be toggled (started or stopped).
+        /// </summary>
         public bool CanToggle
         {
             get
@@ -57,6 +73,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the description of the background task.
+        /// </summary>
         public string? Description
         {
             get
@@ -65,6 +84,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the exception message that caused the task to fail, or null if no exception occurred.
+        /// </summary>
         public string? ExceptionText
         {
             get
@@ -73,6 +95,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the total execution time of the task formatted as a string in "HH:mm:ss" format.
+        /// </summary>
         public string ExecutionTimeSpanText
         {
             get
@@ -84,6 +109,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the display name of the background task.
+        /// </summary>
         public string? Name
         {
             get
@@ -92,6 +120,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
         
+        /// <summary>
+        /// Gets the current status description of the background task.
+        /// </summary>
         public virtual string Status
         {
             get
@@ -100,6 +131,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the command used to asynchronously toggle the execution state of the background task.
+        /// </summary>
         public ICommand ToggleCommandAsync => new ToggleCommandAsync(async _ =>
         {
             if (backgroundTask.IsRunning)
@@ -117,6 +151,9 @@ namespace DiGi.UI.WPF.Classes
             RefreshAll();
         });
 
+        /// <summary>
+        /// Starts the execution of the background task if it is not already running.
+        /// </summary>
         public void Start()
         {
             if (backgroundTask.IsRunning)
@@ -128,6 +165,9 @@ namespace DiGi.UI.WPF.Classes
             RefreshAll();
         }
 
+        /// <summary>
+        /// Gets the text to be displayed on the toggle button, indicating whether the next action is to "Start" or "Stop".
+        /// </summary>
         public string ToggleText
         {
             get
@@ -163,6 +203,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets the name of the type of the underlying background task.
+        /// </summary>
         public string? TypeName
         {
             get
@@ -172,8 +215,17 @@ namespace DiGi.UI.WPF.Classes
         }
     }
 
+    /// <summary>
+    /// A non-generic implementation of <see cref="VisualBackgroundTask{TBackgroundTask}"/> using the base <see cref="IBackgroundTask"/> interface.
+    /// </summary>
     public class VisualBackgroundTask : VisualBackgroundTask<IBackgroundTask>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualBackgroundTask"/> class.
+        /// </summary>
+        /// <param name="backgroundTask">The background task instance to be wrapped.</param>
+        /// <param name="name">The display name of the background task.</param>
+        /// <param name="description">A detailed description of the background task.</param>
         public VisualBackgroundTask(IBackgroundTask backgroundTask, string name, string description)
             : base(backgroundTask, name, description)
         {

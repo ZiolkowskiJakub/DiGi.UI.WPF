@@ -4,13 +4,23 @@ using System.Windows.Threading;
 
 namespace DiGi.UI.WPF.Classes
 {
+    /// <summary>
+    /// Provides a worker implementation that manages a <see cref="CancellableProgressBarWindow"/>, allowing for progress reporting and operation cancellation.
+    /// </summary>
     public class CancellableProgressBarWindowWorker : WindowWorker<CancellableProgressBarWindow>, ICancellableWorker
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CancellableProgressBarWindowWorker"/> class.
+        /// </summary>
         public CancellableProgressBarWindowWorker()
             : this(null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CancellableProgressBarWindowWorker"/> class with the specified owner window.
+        /// </summary>
+        /// <param name="owner">The optional owner window for the progress bar window.</param>
         public CancellableProgressBarWindowWorker(System.Windows.Window? owner)
             : base()
         {
@@ -28,6 +38,10 @@ namespace DiGi.UI.WPF.Classes
             });
         }
 
+        /// <summary>
+        /// Gets a value indicating whether a cancellation is pending.
+        /// </summary>
+        /// <returns>True if a cancellation is pending; otherwise, false.</returns>
         public bool CancellationPending
         {
             get
@@ -36,6 +50,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Gets or sets the text displayed on the main label of the progress bar window.
+        /// </summary>
         public string? Text
         {
             get
@@ -59,6 +76,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Initiates an asynchronous cancellation of the worker's operation.
+        /// </summary>
         public void CancelAsync()
         {
             backgroundWorker?.CancelAsync();

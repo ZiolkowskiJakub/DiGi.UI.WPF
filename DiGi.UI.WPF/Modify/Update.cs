@@ -5,11 +5,26 @@ namespace DiGi.UI.WPF
 {
     public static partial class Modify
     {
+        /// <summary>
+        /// Updates or creates a tree view item based on the provided path within an item collection.
+        /// </summary>
+        /// <param name="itemCollection">The collection of items to search or update.</param>
+        /// <param name="path">The target path for the tree view item.</param>
+        /// <param name="createFunc">A function used to create a new tree view item if it does not exist at the specified path.</param>
+        /// <returns>The updated or created <see cref="ItemPathTreeViewItem"/>, or <c>null</c> if the operation failed or inputs were null.</returns>
         public static ItemPathTreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<ItemPath?, ItemPathTreeViewItem?>? createFunc)
         {
             return Update(itemCollection, path, createFunc, null);
         }
 
+        /// <summary>
+        /// Updates or creates a tree view item based on the provided path within an item collection, optionally specifying a parent path for recursive traversal.
+        /// </summary>
+        /// <param name="itemCollection">The collection of items to search or update.</param>
+        /// <param name="path">The target path for the tree view item.</param>
+        /// <param name="createFunc">A function used to create a new tree view item if it does not exist at the specified path.</param>
+        /// <param name="parentPath">The path of the parent item, used during recursive updates to track depth and hierarchy.</param>
+        /// <returns>The updated or created <see cref="ItemPathTreeViewItem"/>, or <c>null</c> if the operation failed or inputs were null.</returns>
         public static ItemPathTreeViewItem? Update(this ItemCollection? itemCollection, ItemPath? path, Func<ItemPath?, ItemPathTreeViewItem?>? createFunc, ItemPath? parentPath)
         {
             if (itemCollection == null || path == null || createFunc == null)

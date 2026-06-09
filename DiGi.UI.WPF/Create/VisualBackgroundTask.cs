@@ -6,6 +6,14 @@ namespace DiGi.UI.WPF
 {
     public static partial class Create
     {
+        /// <summary>
+        /// Creates a visual wrapper for the specified background task, automatically determining if it is reportable to provide the appropriate visual implementation.
+        /// </summary>
+        /// <param name="backgroundTask">The background task instance to be wrapped.</param>
+        /// <param name="name">The display name of the task.</param>
+        /// <param name="description">A description of the task's operation.</param>
+        /// <returns>An implementation of <see cref="IVisualBackgroundTask"/> that provides visual tracking for the background task.</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="backgroundTask"/> is null.</exception>
         public static IVisualBackgroundTask VisualBackgroundTask(IBackgroundTask backgroundTask, string name, string description)
         {
             if (backgroundTask == null)

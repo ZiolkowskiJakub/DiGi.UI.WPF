@@ -3,20 +3,35 @@ using System.ComponentModel;
 
 namespace DiGi.UI.WPF.Classes
 {
+    /// <summary>
+    /// Provides an abstract base implementation of a visual worker that wraps a <see cref="BackgroundWorker"/> to handle asynchronous operations.
+    /// </summary>
     public abstract class VisualWorker : IVisualWorker
     {
         protected BackgroundWorker backgroundWorker = new() { WorkerReportsProgress = false };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualWorker"/> class and attaches internal handlers to the background worker's events.
+        /// </summary>
         public VisualWorker()
         {
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
         }
 
+        /// <summary>
+        /// Occurs when the background worker begins its operation.
+        /// </summary>
         public event DoWorkEventHandler? DoWork;
 
+        /// <summary>
+        /// Occurs when the background worker completes its operation.
+        /// </summary>
         public event RunWorkerCompletedEventHandler? RunWorkerCompleted;
 
+        /// <summary>
+        /// Gets a value indicating whether the worker is currently busy.
+        /// </summary>
         public bool IsBusy
         {
             get
@@ -25,6 +40,9 @@ namespace DiGi.UI.WPF.Classes
             }
         }
 
+        /// <summary>
+        /// Starts the asynchronous execution of the background worker.
+        /// </summary>
         public virtual void Run()
         {
             backgroundWorker.RunWorkerAsync();

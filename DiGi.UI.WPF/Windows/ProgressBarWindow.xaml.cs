@@ -8,11 +8,17 @@ namespace DiGi.UI.WPF.Windows
     /// </summary>
     public partial class ProgressBarWindow : Window, IWindow
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProgressBarWindow"/> class.
+        /// </summary>
         public ProgressBarWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the progress bar is in an indeterminate state.
+        /// </summary>
         public bool IsIndeterminate
         {
             get
@@ -27,6 +33,9 @@ namespace DiGi.UI.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum value for progress reporting.
+        /// </summary>
         public double Maximum
         {
             get
@@ -40,6 +49,11 @@ namespace DiGi.UI.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Updates the progress bar's current value and optionally updates the status text.
+        /// </summary>
+        /// <param name="value">The current progress value to be displayed.</param>
+        /// <param name="text">The optional text to display as a status message.</param>
         public void Update(double value, string? text = null)
         {
             ProgressBar_Main.Value = value;

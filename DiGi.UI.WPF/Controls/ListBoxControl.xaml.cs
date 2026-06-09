@@ -11,16 +11,28 @@ namespace DiGi.UI.WPF.Controls
     /// </summary>
     public partial class ListBoxControl : UserControl, IControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListBoxControl"/> class.
+        /// </summary>
         public ListBoxControl()
         {
             InitializeComponent();
             SetEnabled();
         }
 
+        /// <summary>
+        /// Occurs when an item is about to be added to the list box.
+        /// </summary>
         public event ListBoxItemAddingEventHandler? ItemAdding;
 
+        /// <summary>
+        /// Occurs when the selection within the list box changes.
+        /// </summary>
         public event SelectionChangedEventHandler? SelectionChanged;
 
+        /// <summary>
+        /// Gets or sets the <see cref="SelectionMode"/> of the list box.
+        /// </summary>
         public SelectionMode SelectionMode
         {
             get
@@ -35,16 +47,30 @@ namespace DiGi.UI.WPF.Controls
             }
         }
 
+        /// <summary>
+        /// Clears all items from the list box.
+        /// </summary>
         public void ClearItems()
         {
             ListBox_Main.Items.Clear();
         }
 
+        /// <summary>
+        /// Retrieves a list of items of type <typeparamref name="T"/> from the list box.
+        /// </summary>
+        /// <typeparam name="T">The type of items to retrieve.</typeparam>
+        /// <param name="selected">If set to <c>true</c>, only selected items are returned; otherwise, all items are returned.</param>
+        /// <returns>A list containing the retrieved items of type <typeparamref name="T"/>, or <c>null</c> if no items match the criteria.</returns>
         public List<T>? GetItems<T>(bool selected = true)
         {
             return Query.TagItems<T, ListBoxItem>(ListBox_Main.Items, true, selected, x => x != null && x.IsSelected);
         }
 
+        /// <summary>
+        /// Sets the items in the list box using the provided collection of values.
+        /// </summary>
+        /// <typeparam name="T">The type of items to be added to the list box.</typeparam>
+        /// <param name="values">An enumerable collection of values to populate the list box with.</param>
         public void SetItems<T>(IEnumerable<T> values)
         {
             ListBox_Main.Items.Clear();

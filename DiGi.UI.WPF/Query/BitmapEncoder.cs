@@ -5,6 +5,11 @@ namespace DiGi.UI.WPF
 {
     public static partial class Query
     {
+        /// <summary>
+        /// Determines the appropriate <see cref="BitmapEncoder"/> based on the file extensions provided in the specified file filter.
+        /// </summary>
+        /// <param name="fileFilter">The file filter containing the list of extensions to evaluate.</param>
+        /// <returns>A <see cref="BitmapEncoder"/> instance (such as <see cref="JpegBitmapEncoder"/> or <see cref="PngBitmapEncoder"/>) if a matching image extension is found; otherwise, null.</returns>
         public static BitmapEncoder? BitmapEncoder(this FileFilter? fileFilter)
         {
             List<string>? extensions = fileFilter?.Extensions;

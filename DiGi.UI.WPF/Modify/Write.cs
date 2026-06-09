@@ -6,6 +6,12 @@ namespace DiGi.UI.WPF
 {
     public static partial class Modify
     {
+        /// <summary>
+        /// Writes the specified bitmap image to a file at the given path.
+        /// </summary>
+        /// <param name="bitmapImage">The bitmap image to save.</param>
+        /// <param name="path">The destination file path.</param>
+        /// <returns>True if the write operation was successful; otherwise, false.</returns>
         public static bool Write(BitmapImage? bitmapImage, string? path)
         {
             if (bitmapImage == null || string.IsNullOrWhiteSpace(path))
@@ -25,6 +31,12 @@ namespace DiGi.UI.WPF
             return true;
         }
 
+        /// <summary>
+        /// Writes the specified bitmap image to a file using a save file dialog to determine the destination path.
+        /// </summary>
+        /// <param name="bitmapImage">The bitmap image to save.</param>
+        /// <param name="path">When this method returns, contains the path of the file that was saved, or null if the operation failed.</param>
+        /// <returns>True if the write operation was successful; otherwise, false.</returns>
         public static bool Write(BitmapImage? bitmapImage, out string? path)
         {
             path = null;
@@ -49,6 +61,11 @@ namespace DiGi.UI.WPF
             return Write(bitmapImage, path);
         }
 
+        /// <summary>
+        /// Writes the specified bitmap image to a file using a save file dialog.
+        /// </summary>
+        /// <param name="bitmapImage">The bitmap image to save.</param>
+        /// <returns>True if the write operation was successful; otherwise, false.</returns>
         public static bool Write(BitmapImage? bitmapImage)
         {
             return Write(bitmapImage, out _);

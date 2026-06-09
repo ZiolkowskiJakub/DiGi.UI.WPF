@@ -9,11 +9,19 @@ namespace DiGi.UI.WPF.Controls
     /// </summary>
     public partial class ProgressBarControl : UserControl, IControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProgressBarControl"/> class.
+        /// </summary>
         public ProgressBarControl()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Updates the progress bar with a specific value and optional descriptive text.
+        /// </summary>
+        /// <param name="value">The current progress value to be displayed.</param>
+        /// <param name="text">Optional text to display as a label for the progress bar.</param>
         public void Update(double value, string? text = null)
         {
             ProgressBar_Main.Value = value;
@@ -21,6 +29,9 @@ namespace DiGi.UI.WPF.Controls
             SetVisibility();
         }
 
+        /// <summary>
+        /// Gets or sets the maximum value for progress reporting.
+        /// </summary>
         public double Maximum
         {
             get
@@ -34,6 +45,9 @@ namespace DiGi.UI.WPF.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current progress value.
+        /// </summary>
         public double Value
         {
             get
@@ -48,6 +62,9 @@ namespace DiGi.UI.WPF.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the progress bar is in an indeterminate state.
+        /// </summary>
         public bool IsIndeterminate
         {
             get
