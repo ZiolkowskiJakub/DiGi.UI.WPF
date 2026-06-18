@@ -1,4 +1,4 @@
-﻿using DiGi.Core.Interfaces;
+using DiGi.Core.Interfaces;
 using DiGi.UI.WPF.Windows;
 using System.Windows.Threading;
 
@@ -38,10 +38,7 @@ namespace DiGi.UI.WPF.Classes
             });
         }
 
-        /// <summary>
-        /// Gets a value indicating whether a cancellation is pending.
-        /// </summary>
-        /// <returns>True if a cancellation is pending; otherwise, false.</returns>
+        /// <summary> Gets a value indicating whether a cancellation is pending. </summary>
         public bool CancellationPending
         {
             get
