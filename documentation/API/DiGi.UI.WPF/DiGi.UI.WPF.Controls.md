@@ -1,4 +1,4 @@
-#### [DiGi\.UI\.WPF](index.md 'index')
+#### [DiGi\.UI\.WPF](DiGi.UI.WPF.Overview.md 'DiGi\.UI\.WPF\.Overview')
 
 ## DiGi\.UI\.WPF\.Controls Namespace
 ### Classes
