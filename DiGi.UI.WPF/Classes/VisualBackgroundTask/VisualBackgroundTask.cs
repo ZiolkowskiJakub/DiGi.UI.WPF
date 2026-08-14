@@ -85,13 +85,44 @@ namespace DiGi.UI.WPF.Classes
         }
 
         /// <summary>
-        /// Gets the exception message that caused the task to fail, or null if no exception occurred.
+        /// Gets the type and message of the exception that caused the task to fail, with the message of every inner exception appended, or null if no exception occurred.
+        /// <para>The message alone leaves a reader guessing: "Object reference not set to an instance of an object." names neither what threw nor which call it came from. The type is what makes it actionable at a glance.</para>
+        /// <para>This is what the task list shows on hover, so it deliberately stops short of the stack trace. <see cref="StatusText"/> carries the full detail for copying.</para>
         /// </summary>
         public string? ExceptionText
         {
             get
             {
-                return backgroundTask.Exception?.Message;
+                System.Exception? exception = backgroundTask.Exception;
+                if (exception is null)
+                {
+                    return null;
+                }
+
+                System.Text.StringBuilder stringBuilder = new();
+                stringBuilder.Append(exception.GetType().Name).Append(": ").Append(exception.Message);
+
+                System.Exception? exception_Inner = exception.InnerException;
+                while (exception_Inner is not null)
+                {
+                    stringBuilder.AppendLine().Append("---> ").Append(exception_Inner.GetType().Name).Append(": ").Append(exception_Inner.Message);
+                    exception_Inner = exception_Inner.InnerException;
+                }
+
+                return stringBuilder.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Gets the text the status cell contributes to the clipboard: the exception in full when the task failed, the status otherwise.
+        /// <para><see cref="System.Exception.ToString"/> carries the type, the message, the stack trace and every inner exception in one string, which is what makes a failure reportable by selecting the row and pressing Ctrl+C rather than reading a tooltip and retyping it.</para>
+        /// <para>The fallback to the status is what keeps a successful row worth copying - without it the status field would come out empty.</para>
+        /// </summary>
+        public string? StatusText
+        {
+            get
+            {
+                return backgroundTask.Exception?.ToString() ?? Status.ToString();
             }
         }
 
@@ -188,6 +219,7 @@ namespace DiGi.UI.WPF.Classes
                 OnPropertyChanged(nameof(ExecutionTimeSpanText));
                 OnPropertyChanged(nameof(Status));
                 OnPropertyChanged(nameof(ExceptionText));
+                OnPropertyChanged(nameof(StatusText));
                 OnPropertyChanged(nameof(CanToggle));
             });
 

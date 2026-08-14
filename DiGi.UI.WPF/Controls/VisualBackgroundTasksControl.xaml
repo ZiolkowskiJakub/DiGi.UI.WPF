@@ -32,7 +32,10 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="130" IsReadOnly="True">
+                <!-- The cell shows the status and hovers the exception, but a tooltip cannot be selected. Ctrl+C on
+                     a row copies each column's ClipboardContentBinding, so pointing this one at StatusText puts the
+                     whole failure - type, message and stack trace - on the clipboard, and the status when it passed. -->
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" ClipboardContentBinding="{Binding StatusText}" Width="130" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontWeight" Value="Bold" />

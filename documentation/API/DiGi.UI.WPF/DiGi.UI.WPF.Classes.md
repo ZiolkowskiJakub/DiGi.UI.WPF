@@ -1380,7 +1380,11 @@ Implements [Description](https://learn.microsoft.com/en-us/dotnet/api/digi.core.
 
 ## VisualBackgroundTask\<TBackgroundTask\>\.ExceptionText Property
 
-Gets the exception message that caused the task to fail, or null if no exception occurred\.
+Gets the type and message of the exception that caused the task to fail, with the message of every inner exception appended, or null if no exception occurred\.
+
+The message alone leaves a reader guessing: "Object reference not set to an instance of an object." names neither what threw nor which call it came from. The type is what makes it actionable at a glance.
+
+This is what the task list shows on hover, so it deliberately stops short of the stack trace. [StatusText](DiGi.UI.WPF.Classes.md#DiGi.UI.WPF.Classes.VisualBackgroundTask_TBackgroundTask_.StatusText 'DiGi\.UI\.WPF\.Classes\.VisualBackgroundTask\<TBackgroundTask\>\.StatusText') carries the full detail for copying.
 
 ```csharp
 public string? ExceptionText { get; }
@@ -1425,6 +1429,23 @@ Gets the current status description of the background task\.
 
 ```csharp
 public virtual string Status { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.UI.WPF.Classes.VisualBackgroundTask_TBackgroundTask_.StatusText'></a>
+
+## VisualBackgroundTask\<TBackgroundTask\>\.StatusText Property
+
+Gets the text the status cell contributes to the clipboard: the exception in full when the task failed, the status otherwise\.
+
+[System\.Exception\.ToString](https://learn.microsoft.com/en-us/dotnet/api/system.exception.tostring 'System\.Exception\.ToString') carries the type, the message, the stack trace and every inner exception in one string, which is what makes a failure reportable by selecting the row and pressing Ctrl+C rather than reading a tooltip and retyping it.
+
+The fallback to the status is what keeps a successful row worth copying - without it the status field would come out empty.
+
+```csharp
+public string? StatusText { get; }
 ```
 
 #### Property Value
