@@ -69,6 +69,26 @@ namespace DiGi.UI.WPF.Windows
         }
 
         /// <summary>
+        /// Selects the items of the internal list box control whose value satisfies the given function, and deselects the rest.
+        /// </summary>
+        /// <typeparam name="T">The type of the values to test.</typeparam>
+        /// <param name="function">The function deciding whether a value is selected. Nothing is selected or deselected when it is null.</param>
+        public void SelectItems<T>(Func<T, bool>? function)
+        {
+            ListBoxControl_Main.SelectItems(function);
+        }
+
+        /// <summary>
+        /// Selects the items of the internal list box control holding one of the given values, and deselects the rest.
+        /// </summary>
+        /// <typeparam name="T">The type of the values to select.</typeparam>
+        /// <param name="values">The values to be selected. Nothing is selected or deselected when it is null.</param>
+        public void SelectItems<T>(IEnumerable<T>? values)
+        {
+            ListBoxControl_Main.SelectItems(values);
+        }
+
+        /// <summary>
         /// Sets the collection of items for the internal list box control.
         /// </summary>
         /// <typeparam name="T">The type of the items to be set.</typeparam>

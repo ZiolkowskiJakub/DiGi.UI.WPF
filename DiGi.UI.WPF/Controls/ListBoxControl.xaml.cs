@@ -67,6 +67,73 @@ namespace DiGi.UI.WPF.Controls
         }
 
         /// <summary>
+        /// Selects the items whose value satisfies the given function, and deselects the rest.
+        /// <para>Matching is on the value the item was added with through <see cref="SetItems{T}(IEnumerable{T})"/>, not on the text shown for it. An item whose value is not a <typeparamref name="T"/> is passed over.</para>
+        /// <para>In <see cref="System.Windows.Controls.SelectionMode.Single"/> only the first match can be held, so the rest are ignored. <see cref="SelectionChanged"/> is raised once for the whole selection rather than once per item.</para>
+        /// </summary>
+        /// <typeparam name="T">The type of the values to test.</typeparam>
+        /// <param name="function">The function deciding whether a value is selected. Nothing is selected or deselected when it is null.</param>
+        public void SelectItems<T>(Func<T, bool>? function)
+        {
+            if (function == null)
+            {
+                return;
+            }
+
+            List<ListBoxItem> listBoxItems = [];
+            foreach (object @object in ListBox_Main.Items)
+            {
+                if (@object is ListBoxItem listBoxItem && listBoxItem.Tag is T value && function.Invoke(value))
+                {
+                    listBoxItems.Add(listBoxItem);
+                }
+            }
+
+            if (SelectionMode == SelectionMode.Single)
+            {
+                ListBox_Main.SelectedItem = listBoxItems.Count == 0 ? null : listBoxItems[0];
+                return;
+            }
+
+            // Cleared with the handler still attached, so that a selection that ends up empty is still reported.
+            SelectNone();
+
+            if (listBoxItems.Count == 0)
+            {
+                return;
+            }
+
+            // The last item is added on its own, with the handler back in place, so the whole selection raises
+            // one event instead of one per item - the same way SelectAll does it.
+            ListBox_Main.SelectionChanged -= ListBox_Main_SelectionChanged;
+            for (int i = 0; i < listBoxItems.Count - 1; i++)
+            {
+                ListBox_Main.SelectedItems.Add(listBoxItems[i]);
+            }
+            ListBox_Main.SelectionChanged += ListBox_Main_SelectionChanged;
+
+            ListBox_Main.SelectedItems.Add(listBoxItems[^1]);
+        }
+
+        /// <summary>
+        /// Selects the items holding one of the given values, and deselects the rest.
+        /// <para>Values are compared with the default comparer of <typeparamref name="T"/>, which for a type that does not implement its own equality means the very instances that were passed to <see cref="SetItems{T}(IEnumerable{T})"/>. Use <see cref="SelectItems{T}(Func{T, bool})"/> to match on something the values carry instead, such as an identifier.</para>
+        /// </summary>
+        /// <typeparam name="T">The type of the values to select.</typeparam>
+        /// <param name="values">The values to be selected. Nothing is selected or deselected when it is null.</param>
+        public void SelectItems<T>(IEnumerable<T>? values)
+        {
+            if (values == null)
+            {
+                return;
+            }
+
+            HashSet<T> values_HashSet = [.. values];
+
+            SelectItems<T>(values_HashSet.Contains);
+        }
+
+        /// <summary>
         /// Sets the items in the list box using the provided collection of values.
         /// </summary>
         /// <typeparam name="T">The type of items to be added to the list box.</typeparam>

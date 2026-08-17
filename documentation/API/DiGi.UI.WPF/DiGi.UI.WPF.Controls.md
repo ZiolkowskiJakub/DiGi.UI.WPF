@@ -217,6 +217,60 @@ public void InitializeComponent();
 
 Implements [InitializeComponent\(\)](https://learn.microsoft.com/en-us/dotnet/api/system.windows.markup.icomponentconnector.initializecomponent 'System\.Windows\.Markup\.IComponentConnector\.InitializeComponent')
 
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Collections.Generic.IEnumerable_T_)'></a>
+
+## ListBoxControl\.SelectItems\<T\>\(IEnumerable\<T\>\) Method
+
+Selects the items holding one of the given values, and deselects the rest\.
+
+Values are compared with the default comparer of [T](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Collections.Generic.IEnumerable_T_).T 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectItems\<T\>\(System\.Collections\.Generic\.IEnumerable\<T\>\)\.T'), which for a type that does not implement its own equality means the very instances that were passed to [SetItems&lt;T&gt;\(IEnumerable&lt;T&gt;\)](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SetItems_T_(System.Collections.Generic.IEnumerable_T_) 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SetItems\<T\>\(System\.Collections\.Generic\.IEnumerable\<T\>\)'). Use [SelectItems&lt;T&gt;\(Func&lt;T,bool&gt;\)](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_) 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectItems\<T\>\(System\.Func\<T,bool\>\)') to match on something the values carry instead, such as an identifier.
+
+```csharp
+public void SelectItems<T>(System.Collections.Generic.IEnumerable<T>? values);
+```
+#### Type parameters
+
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Collections.Generic.IEnumerable_T_).T'></a>
+
+`T`
+
+The type of the values to select\.
+#### Parameters
+
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Collections.Generic.IEnumerable_T_).values'></a>
+
+`values` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[T](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Collections.Generic.IEnumerable_T_).T 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectItems\<T\>\(System\.Collections\.Generic\.IEnumerable\<T\>\)\.T')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The values to be selected\. Nothing is selected or deselected when it is null\.
+
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_)'></a>
+
+## ListBoxControl\.SelectItems\<T\>\(Func\<T,bool\>\) Method
+
+Selects the items whose value satisfies the given function, and deselects the rest\.
+
+Matching is on the value the item was added with through [SetItems&lt;T&gt;\(IEnumerable&lt;T&gt;\)](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SetItems_T_(System.Collections.Generic.IEnumerable_T_) 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SetItems\<T\>\(System\.Collections\.Generic\.IEnumerable\<T\>\)'), not on the text shown for it. An item whose value is not a [T](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_).T 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectItems\<T\>\(System\.Func\<T,bool\>\)\.T') is passed over.
+
+In [System\.Windows\.Controls\.SelectionMode\.Single](https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.selectionmode.single 'System\.Windows\.Controls\.SelectionMode\.Single') only the first match can be held, so the rest are ignored. [SelectionChanged](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectionChanged 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectionChanged') is raised once for the whole selection rather than once per item.
+
+```csharp
+public void SelectItems<T>(System.Func<T,bool>? function);
+```
+#### Type parameters
+
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_).T'></a>
+
+`T`
+
+The type of the values to test\.
+#### Parameters
+
+<a name='DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_).function'></a>
+
+`function` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](DiGi.UI.WPF.Controls.md#DiGi.UI.WPF.Controls.ListBoxControl.SelectItems_T_(System.Func_T,bool_).T 'DiGi\.UI\.WPF\.Controls\.ListBoxControl\.SelectItems\<T\>\(System\.Func\<T,bool\>\)\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
+
+The function deciding whether a value is selected\. Nothing is selected or deselected when it is null\.
+
 <a name='DiGi.UI.WPF.Controls.ListBoxControl.SetItems_T_(System.Collections.Generic.IEnumerable_T_)'></a>
 
 ## ListBoxControl\.SetItems\<T\>\(IEnumerable\<T\>\) Method
