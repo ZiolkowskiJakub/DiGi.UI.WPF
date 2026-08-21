@@ -141,6 +141,24 @@ namespace DiGi.UI.WPF.Classes
         }
 
         /// <summary>
+        /// Gets the text the Task Name cell shows on hover: the name, followed by the description on a second line.
+        /// <para>The name is repeated here rather than only the description, because the cell that shows it is the one column sized from what the fixed columns leave over, so it is the one that can still trim its text. A trimmed name is then unreadable and the description alone does not carry it.</para>
+        /// <para>Returns null, not an empty string, when there is nothing to show - a null tooltip is not displayed at all, while an empty one hovers as an empty box.</para>
+        /// </summary>
+        public string? ToolTipText
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    return string.IsNullOrWhiteSpace(description) ? null : description;
+                }
+
+                return string.IsNullOrWhiteSpace(description) ? name : $"{name}{System.Environment.NewLine}{description}";
+            }
+        }
+
+        /// <summary>
         /// Gets the display name of the background task.
         /// </summary>
         public string? Name

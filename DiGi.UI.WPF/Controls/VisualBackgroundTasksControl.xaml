@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DiGi.UI.WPF.Controls"
              mc:Ignorable="d"
              x:Name="Root"
-             d:DesignHeight="400" d:DesignWidth="550">
+             d:DesignHeight="400" d:DesignWidth="800">
     <Grid Background="#FFE5E5E5">
         <DataGrid ItemsSource="{Binding VisualBackgroundTasks, ElementName=Root}" 
                   AutoGenerateColumns="False" 
@@ -22,12 +22,27 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Task Name" Binding="{Binding Name}" Width="*" IsReadOnly="True">
+                <!-- The names are long - "Report BuildingModels without a building (dry run, deletes nothing)" is derived
+                     from a task's DryRun rather than written short, so shortening them is not an option - and the column
+                     is whatever the fixed columns leave over. Stretch is what lets the TextBlock measure against the
+                     real column width: centred, it sized itself to the text and was clipped at BOTH ends, losing the
+                     start of the name. Wrap then grows the row instead of cutting, MaxHeight caps that growth at three
+                     lines, and the trimming only becomes reachable once that cap is hit. ToolTipText, rather than
+                     Description on its own, is what makes a trimmed name readable again on hover. A MultiBinding of
+                     Name and Description would be the way to compose it here, but Setter.Value takes a single Binding
+                     and drops a MultiBinding without a compile error or a runtime warning - the tooltip simply never
+                     appears - so the two are joined in the view model instead. -->
+                <DataGridTextColumn Header="Task Name" Binding="{Binding Name}" Width="*" MinWidth="200" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                            <Setter Property="MaxHeight" Value="54" />
+                            <Setter Property="Margin" Value="4,2,4,2" />
+                            <Setter Property="ToolTip" Value="{Binding ToolTipText}" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>

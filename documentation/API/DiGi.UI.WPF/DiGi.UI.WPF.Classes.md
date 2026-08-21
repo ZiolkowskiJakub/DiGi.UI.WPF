@@ -1477,6 +1477,23 @@ public string ToggleText { get; }
 #### Property Value
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
+<a name='DiGi.UI.WPF.Classes.VisualBackgroundTask_TBackgroundTask_.ToolTipText'></a>
+
+## VisualBackgroundTask\<TBackgroundTask\>\.ToolTipText Property
+
+Gets the text the Task Name cell shows on hover: the name, followed by the description on a second line\.
+
+The name is repeated here rather than only the description, because the cell that shows it is the one column sized from what the fixed columns leave over, so it is the one that can still trim its text. A trimmed name is then unreadable and the description alone does not carry it.
+
+Returns null, not an empty string, when there is nothing to show - a null tooltip is not displayed at all, while an empty one hovers as an empty box.
+
+```csharp
+public string? ToolTipText { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
 <a name='DiGi.UI.WPF.Classes.VisualBackgroundTask_TBackgroundTask_.TypeName'></a>
 
 ## VisualBackgroundTask\<TBackgroundTask\>\.TypeName Property
